@@ -27,7 +27,7 @@ export function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     // Add user message
@@ -35,27 +35,19 @@ export function Chatbot() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
-    // Simulate AI / Backend processing
-    setTimeout(() => {
-      const lowerInput = userMsg.text.toLowerCase();
-      let botResponse = "I'm currently a demo bot. In the future, I'll fetch real-time data from our backend!";
-
-      if (lowerInput.includes("fee") || lowerInput.includes("cost")) {
-        botResponse = "Our fees vary depending on the class (Nursery to Class 10) and whether you are enrolling in School Education or Coaching Classes. Please contact our admission office at +91 62017 04992 for exact details.";
-      } else if (lowerInput.includes("class") || lowerInput.includes("course") || lowerInput.includes("program")) {
-        botResponse = "We offer School Education (Nursery to Class 10 BSEB) and targeted Coaching Classes for all school subjects. We ensure small batch sizes and individual attention.";
-      } else if (lowerInput.includes("location") || lowerInput.includes("where") || lowerInput.includes("address")) {
-        botResponse = "Shiksha Prabhat Public School & Coaching Classes is located in Bahurar, Bihar.";
-      } else if (lowerInput.includes("director") || lowerInput.includes("principal")) {
-        botResponse = "Our Director is Sambhodh Kumar. You can read his message in the About section on our homepage!";
-      } else if (lowerInput.includes("contact") || lowerInput.includes("phone") || lowerInput.includes("number")) {
-        botResponse = "You can reach us directly at +91 62017 04992 or email us at info@shikshaprabhat.com.";
-      } else if (lowerInput.includes("hi") || lowerInput.includes("hello")) {
-        botResponse = "Hello! Welcome to Shiksha Prabhat. How can I assist you with your child's education?";
-      }
-
-      setMessages((prev) => [...prev, { id: Date.now().toString(), text: botResponse, sender: "bot" }]);
-    }, 1000);
+    try {
+      // Simulate typing delay for realism
+      await new Promise(r => setTimeout(r, 400));
+      const res = await fetch("http://localhost:3001/chatbot/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: userMsg.text }),
+      });
+      const data = await res.json();
+      setMessages((prev) => [...prev, { id: Date.now().toString(), text: data.answer || "Sorry, I couldn't understand that.", sender: "bot" }]);
+    } catch (err) {
+      setMessages((prev) => [...prev, { id: Date.now().toString(), text: "Sorry, the server is currently unavailable.", sender: "bot" }]);
+    }
   };
 
   return (
