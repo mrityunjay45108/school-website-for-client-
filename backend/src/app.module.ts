@@ -9,9 +9,10 @@ import { StudentModule } from './student/student.module.js';
 import { DashboardModule } from './dashboard/dashboard.module.js';
 import { TeacherModule } from './teacher/teacher.module.js';
 import { CourseModule } from './course/course.module.js';
+import { ChatbotModule } from './chatbot/chatbot.module.js';
 
 @Module({
-  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule, DashboardModule, TeacherModule, CourseModule],
+  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule, DashboardModule, TeacherModule, CourseModule, ChatbotModule],
   controllers: [AppController],
   providers: [AppService],
 })
