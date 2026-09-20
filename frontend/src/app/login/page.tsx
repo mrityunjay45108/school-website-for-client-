@@ -6,18 +6,28 @@ import { BookOpen, Lock, Mail, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { api } from "@/lib/axios";
+import toast from "react-hot-toast";
+
 export default function AdminLogin() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login logic, then redirect to Admin Dashboard
-    if (email === "kumarmrityunjay5210@gmail.com" || email === "director@shikshaprabhat.com") {
+    setIsLoading(true);
+    try {
+      const response = await api.post("/auth/login", { email, password });
+      localStorage.setItem("admin_token", response.data.access_token);
+      
+      toast.success("Login Successful!");
       router.push("/admin");
-    } else {
-      router.push("/admin"); // For now, just allow access for demo
+    } catch (error) {
+      toast.error("Invalid credentials. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
