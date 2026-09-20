@@ -19,16 +19,16 @@ export class TopperController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.topperService.findOne(+id);
+    return this.topperService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTopperDto: UpdateTopperDto) {
-    return this.topperService.update(+id, updateTopperDto);
+    return this.topperService.update(id, updateTopperDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.topperService.remove(+id);
+    return this.topperService.remove(id);
   }
 }

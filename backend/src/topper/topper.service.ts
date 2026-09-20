@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTopperDto } from './dto/create-topper.dto.js';
 import { UpdateTopperDto } from './dto/update-topper.dto.js';
+import { PrismaService } from '../prisma/prisma.service.js';
 
 @Injectable()
 export class TopperService {
+  constructor(private prisma: PrismaService) {}
+
   create(createTopperDto: CreateTopperDto) {
-    return 'This action adds a new topper';
+    return this.prisma.topper.create({
+      data: createTopperDto as any
+    });
   }
 
   findAll() {
-    return `This action returns all topper`;
+    return this.prisma.topper.findMany({
+      orderBy: { rank: 'asc' }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} topper`;
+  findOne(id: string) {
+    return this.prisma.topper.findUnique({ where: { id } });
   }
 
-  update(id: number, updateTopperDto: UpdateTopperDto) {
-    return `This action updates a #${id} topper`;
+  update(id: string, updateTopperDto: UpdateTopperDto) {
+    return this.prisma.topper.update({
+      where: { id },
+      data: updateTopperDto as any
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} topper`;
+  remove(id: string) {
+    return this.prisma.topper.delete({ where: { id } });
   }
 }

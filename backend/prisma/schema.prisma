@@ -216,3 +216,13 @@ model ContactMessage {
   status      String   @default("unread") // unread, replied
   createdAt   DateTime @default(now())
 }
+
+model Topper {
+  id        String   @id @default(uuid())
+  name      String
+  class     String
+  score     String
+  rank      String
+  year      Int      @default(2026)
+  createdAt DateTime @default(now())
+}
