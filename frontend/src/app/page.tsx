@@ -254,9 +254,11 @@ export default function LandingPage() {
             {notices.length > 0 ? notices.map((notice, i) => (
               <div key={i} className="bg-[#111111] border border-[#333] p-6 hover:border-[#eab308]/50 transition-colors flex gap-6 items-start">
                 <div className="bg-[#181818] border border-[#333] p-4 flex flex-col items-center justify-center min-w-[80px]">
-                  <span className="text-2xl font-bold text-[#eab308] leading-none">{new Date(notice.createdAt || Date.now()).getDate()}</span>
+                  <span className="text-2xl font-bold text-[#eab308] leading-none">
+                    {notice.createdAt ? new Date(notice.createdAt).getDate() : '--'}
+                  </span>
                   <span className="text-xs text-gray-500 uppercase font-bold mt-1">
-                    {new Date(notice.createdAt || Date.now()).toLocaleString('default', { month: 'short' })}
+                    {notice.createdAt ? new Date(notice.createdAt).toLocaleString('default', { month: 'short' }) : 'New'}
                   </span>
                 </div>
                 <div>
