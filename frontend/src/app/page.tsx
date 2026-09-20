@@ -166,9 +166,9 @@ export default function LandingPage() {
             <div className="w-full md:w-5/12 relative">
               <div className="aspect-[3/4] w-full border-2 border-[#333] p-2 bg-[#181818] relative z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop" 
-                  alt="Director" 
-                  className="w-full h-full object-cover filter grayscale-[20%]"
+                  src="/director.jpg" 
+                  alt="Director Sambhodh Kumar" 
+                  className="w-full h-full object-cover object-[center_15%] filter grayscale-[10%]"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#eab308] z-0 hidden md:block"></div>
