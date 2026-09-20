@@ -219,7 +219,7 @@ export default function LandingPage() {
             {/* Professional Developer Credit Card */}
             <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 flex items-center gap-4 hover:bg-slate-800/80 transition-colors shadow-lg shadow-black/50">
               <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-800 shrink-0 border border-slate-700">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mrityunjay" alt="Developer" className="w-full h-full" />
+                <img src="/mrityunjay.png" alt="Developer Mrityunjay Kumar" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1">
                 <p className="text-[10px] uppercase tracking-widest text-blue-400 font-black mb-1">Design & Developed By</p>
