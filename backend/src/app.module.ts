@@ -5,9 +5,10 @@ import { TopperModule } from './topper/topper.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { NoticeModule } from './notice/notice.module.js';
+import { StudentModule } from './student/student.module.js';
 
 @Module({
-  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule],
+  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule],
   controllers: [AppController],
   providers: [AppService],
 })

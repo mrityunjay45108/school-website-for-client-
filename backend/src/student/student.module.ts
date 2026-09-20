@@ -1,0 +1,11 @@
+import { Module } from '@nestjs/common';
+import { StudentService } from './student.service.js';
+import { StudentController } from './student.controller.js';
+import { PrismaModule } from '../prisma/prisma.module.js';
+
+@Module({
+  imports: [PrismaModule],
+  controllers: [StudentController],
+  providers: [StudentService],
+})
+export class StudentModule {}
