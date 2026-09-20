@@ -133,8 +133,15 @@ export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps)
         })}
       </div>
 
-      <div className="p-4 border-t border-[#333]">
-        <button className="flex w-full items-center gap-3 px-3 py-3 rounded-sm text-red-500 hover:bg-red-500/10 transition-colors">
+      <div className="p-4 border-t border-[#333] pb-8 md:pb-4">
+        <button 
+          onClick={() => {
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('admin_user');
+            window.location.href = '/login';
+          }}
+          className="flex w-full items-center gap-3 px-3 py-3 rounded-sm text-red-500 hover:bg-red-500/10 transition-colors"
+        >
           <LogOut size={20} />
           {!isCollapsed && <span>Logout</span>}
         </button>
