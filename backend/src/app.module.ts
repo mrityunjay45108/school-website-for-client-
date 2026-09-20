@@ -6,9 +6,10 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { NoticeModule } from './notice/notice.module.js';
 import { StudentModule } from './student/student.module.js';
+import { DashboardModule } from './dashboard/dashboard.module.js';
 
 @Module({
-  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule],
+  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule, DashboardModule],
   controllers: [AppController],
   providers: [AppService],
 })
