@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Delete, Param, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
 import { StudentService } from './student.service.js';
 
 @Controller('students')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 

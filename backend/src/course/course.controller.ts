@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Delete, Param, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
 import { CourseService } from './course.service.js';
 
 @Controller('courses')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 

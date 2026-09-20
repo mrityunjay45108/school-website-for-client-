@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { NoticeService } from './notice.service.js';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
+import { NoticeService } from './notice.service.js';
 
 @Controller('notices')
 export class NoticeController {

@@ -1,5 +1,5 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Request, Get } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './jwt-auth.guard.js';
 import { AuthService } from './auth.service.js';
 
 @Controller('auth')
@@ -12,19 +12,19 @@ export class AuthController {
     return this.authService.login(signInDto.email, signInDto.password);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   @Post('change-password')
   changePassword(@Request() req: any, @Body() body: Record<string, any>) {
     return this.authService.changePassword(req.user.userId, body.newPassword);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   @Post('create-admin')
   createAdmin(@Body() body: Record<string, any>) {
     return this.authService.createAdmin(body.email, body.name, body.password);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   @Get('admins')
   getAdmins() {
     return this.authService.getAdmins();

@@ -17,8 +17,8 @@ import { JwtAuthGuard } from './jwt-auth.guard.js';
       signOptions: { expiresIn: '7d' },
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard],
   controllers: [AuthController],
-  exports: [AuthService, PassportModule],
+  exports: [AuthService, PassportModule, JwtAuthGuard],
 })
 export class AuthModule {}
