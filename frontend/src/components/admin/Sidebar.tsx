@@ -22,7 +22,8 @@ import {
   ChevronRight,
   ClipboardList,
   PenTool,
-  Clock
+  Clock,
+  X
 } from "lucide-react";
 
 const menuItems = [
@@ -42,34 +43,61 @@ const menuItems = [
   { title: "Settings", icon: Settings, path: "/admin/settings" },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isMobileMenuOpen?: boolean;
+  setIsMobileMenuOpen?: (val: boolean) => void;
+}
+
+export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <motion.aside
-      animate={{ width: isCollapsed ? 80 : 280 }}
-      className="h-screen bg-[#111111] border-r border-[#333] flex flex-col relative z-20 shadow-xl transition-all duration-300"
-    >
-      <div className="flex items-center justify-between p-6 h-20 border-b border-[#333]">
-        {!isCollapsed && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="font-serif font-bold text-xl text-[#eab308] truncate"
+    <>
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/60 z-40"
+          onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      <motion.aside
+        animate={{ width: isCollapsed ? 80 : 280 }}
+        className={`fixed md:relative h-screen bg-[#111111] border-r border-[#333] flex flex-col z-50 shadow-xl transition-transform duration-300 ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="flex items-center justify-between p-6 h-20 border-b border-[#333]">
+          {!isCollapsed && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="font-serif font-bold text-xl text-[#eab308] truncate"
+            >
+              SPPS Admin
+            </motion.div>
+          )}
+          {isCollapsed && (
+            <div className="w-full flex justify-center text-[#eab308] font-bold text-xl font-serif">
+              S
+            </div>
+          )}
+          
+          {/* Mobile Close Button */}
+          {setIsMobileMenuOpen && (
+            <button 
+              className="md:hidden text-gray-400 hover:text-white"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X size={24} />
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="hidden md:block absolute -right-4 top-6 bg-[#eab308] text-[#111] p-1 rounded-full shadow-lg hover:scale-110 transition"
           >
-            SPPS Admin
-          </motion.div>
-        )}
-        {isCollapsed && (
-          <div className="w-full flex justify-center text-[#eab308] font-bold text-xl font-serif">
-            S
-          </div>
-        )}
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-4 top-6 bg-[#eab308] text-[#111] p-1 rounded-full shadow-lg hover:scale-110 transition"
-        >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
       </div>
@@ -112,5 +140,6 @@ export function Sidebar() {
         </button>
       </div>
     </motion.aside>
+    </>
   );
 }

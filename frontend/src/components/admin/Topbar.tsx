@@ -1,12 +1,24 @@
 "use client";
 
 import React from "react";
-import { Search, Bell, Mail, Calendar, Sun, Moon } from "lucide-react";
+import { Search, Bell, Mail, Calendar, Menu } from "lucide-react";
 
-export function Topbar() {
+interface TopbarProps {
+  toggleMobileMenu?: () => void;
+}
+
+export function Topbar({ toggleMobileMenu }: TopbarProps) {
   return (
-    <header className="h-20 bg-[#111111]/90 backdrop-blur-md border-b border-[#333] sticky top-0 z-10 flex items-center justify-between px-8 shadow-sm">
+    <header className="h-20 bg-[#111111]/90 backdrop-blur-md border-b border-[#333] sticky top-0 z-10 flex items-center justify-between px-4 md:px-8 shadow-sm">
       <div className="flex-1 flex items-center gap-4">
+        {toggleMobileMenu && (
+          <button 
+            className="md:hidden p-2 text-white hover:bg-[#333] rounded-sm transition-colors"
+            onClick={toggleMobileMenu}
+          >
+            <Menu size={24} />
+          </button>
+        )}
         <div className="relative w-full max-w-md hidden md:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
           <input

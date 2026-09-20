@@ -2,10 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  Scale, BookOpen, GraduationCap, Users, PhoneCall, 
-  MapPin, Clock, ArrowRight, CheckCircle, Mail, Bell
-} from "lucide-react";
+import { ArrowRight, BookOpen, User, Users, Calendar, MapPin, Phone, PhoneCall, Mail, Clock, ShieldCheck, FileText, CheckCircle, Bell, ArrowUpRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 // ----------------------------------------------------------------------
@@ -13,6 +10,7 @@ import Link from "next/link";
 // ----------------------------------------------------------------------
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,7 +26,7 @@ const Navbar = () => {
             <BookOpen size={24} className="text-[#181818]" />
           </div>
           <div>
-            <h1 className="font-serif font-bold text-2xl tracking-wide text-[#eab308]">
+            <h1 className="font-serif font-bold text-xl md:text-2xl tracking-wide text-[#eab308]">
               Shiksha Prabhat
             </h1>
           </div>
@@ -41,8 +39,8 @@ const Navbar = () => {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="hidden md:flex text-gray-300 hover:text-white text-sm font-medium transition-colors">
+        <div className="hidden lg:flex items-center gap-4">
+          <Link href="/login" className="text-gray-300 hover:text-white text-sm font-medium transition-colors">
             Admin Login
           </Link>
           <Link href="/admission">
@@ -51,7 +49,41 @@ const Navbar = () => {
             </button>
           </Link>
         </div>
+        
+        {/* Mobile Toggle */}
+        <button 
+          className="lg:hidden text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-full left-0 w-full bg-[#181818] border-b border-[#333] shadow-xl py-4 flex flex-col px-6 gap-4">
+          {["Home", "Programs", "Notices", "Toppers", "Gallery", "Contact"].map((item) => (
+            <Link 
+              key={item} 
+              href={`#${item.toLowerCase()}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-base font-medium text-white hover:text-[#eab308] py-2 border-b border-[#333]"
+            >
+              {item}
+            </Link>
+          ))}
+          <div className="flex flex-col gap-4 mt-2">
+            <Link href="/login" className="text-gray-300 hover:text-white text-base font-medium py-2">
+              Admin Login
+            </Link>
+            <Link href="/admission" onClick={() => setIsMobileMenuOpen(false)}>
+              <button suppressHydrationWarning className="w-full bg-[#eab308] hover:bg-[#ca9a04] text-[#181818] px-6 py-3 text-sm font-bold transition-colors rounded-sm">
+                School Admission
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
