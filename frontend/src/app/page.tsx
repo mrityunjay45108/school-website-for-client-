@@ -42,6 +42,9 @@ const Navbar = () => {
           ))}
         </div>
         <div className="flex items-center gap-4">
+          <Link href="/login" className="hidden md:flex text-gray-300 hover:text-white text-sm font-medium transition-colors">
+            Admin Login
+          </Link>
           <Link href="/admission">
             <button className="bg-[#eab308] hover:bg-[#ca9a04] text-[#181818] px-6 py-2.5 text-sm font-bold transition-colors rounded-sm">
               School Admission
