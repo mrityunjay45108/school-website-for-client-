@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -38,17 +35,15 @@ model Student {
   motherName         String?
   mobile             String?
   address            String?
-  class              String?
-  previousSchool     String?
-  dob                DateTime?
-  gender             String?
   photo              String?
-  aadhaar            String?
   registrationNumber String?  @unique
   rollNumber         String?
   
+  enrollments        Enrollment[]
+  attendance         Attendance[]
+  payments           Payment[]
+  testResults        TestResult[]
   results            Result[]
-  admissions         Admission[]
 }
 
 model Teacher {
@@ -59,29 +54,126 @@ model Teacher {
   qualification String?
   experience    String?
   subjects      String[]
-  classes       String[]
-  achievements  String?
   socialLinks   Json?
-
+  
   courses       Course[]
+  batches       Batch[]
 }
 
 model Course {
   id          String   @id @default(uuid())
   name        String
-  category    String
-  board       String?
+  category    String   // JEE, NEET, Foundation, etc.
   description String?
   subjects    String[]
   fees        Float?
   duration    String?
   image       String?
   status      String   @default("published")
-  seats       Int?
   
   teacherId   String?
   teacher     Teacher? @relation(fields: [teacherId], references: [id])
   
+  batches     Batch[]
+  enrollments Enrollment[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Batch {
+  id          String   @id @default(uuid())
+  name        String   // Morning, Evening, Weekend
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  teacherId   String?
+  teacher     Teacher? @relation(fields: [teacherId], references: [id])
+  time        String?
+  createdAt   DateTime @default(now())
+}
+
+model Enrollment {
+  id          String   @id @default(uuid())
+  studentId   String
+  student     Student  @relation(fields: [studentId], references: [id])
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  status      String   @default("active")
+  createdAt   DateTime @default(now())
+}
+
+model Attendance {
+  id          String   @id @default(uuid())
+  studentId   String
+  student     Student  @relation(fields: [studentId], references: [id])
+  date        DateTime
+  status      String   // Present, Absent
+  createdAt   DateTime @default(now())
+}
+
+model Payment {
+  id          String   @id @default(uuid())
+  studentId   String
+  student     Student  @relation(fields: [studentId], references: [id])
+  amount      Float
+  status      String   // pending, completed
+  method      String?
+  invoiceUrl  String?
+  createdAt   DateTime @default(now())
+}
+
+model MockTest {
+  id          String   @id @default(uuid())
+  title       String
+  durationMin Int
+  questions   Question[]
+  results     TestResult[]
+  createdAt   DateTime @default(now())
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  testId      String
+  test        MockTest @relation(fields: [testId], references: [id])
+  content     String
+  options     Json     // ["A", "B", "C", "D"]
+  correct     String
+  marks       Int      @default(4)
+  negative    Int      @default(1)
+}
+
+model TestResult {
+  id          String   @id @default(uuid())
+  testId      String
+  test        MockTest @relation(fields: [testId], references: [id])
+  studentId   String
+  student     Student  @relation(fields: [studentId], references: [id])
+  score       Int
+  totalMarks  Int
+  answers     Json     // Store student answers
+  createdAt   DateTime @default(now())
+}
+
+model Result {
+  id                 String   @id @default(uuid())
+  studentId          String
+  student            Student  @relation(fields: [studentId], references: [id])
+  examName           String   // JEE, NEET
+  air                Int?     // All India Rank
+  marks              Int
+  photo              String?
+  successStory       String?
+  createdAt          DateTime @default(now())
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  image       String?
+  categories  String[]
+  tags        String[]
+  published   Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -90,66 +182,18 @@ model Notice {
   id          String   @id @default(uuid())
   title       String
   content     String
-  type        String   // Admission, Holiday, Exam, etc.
+  type        String   // Admission, Holiday, Exam
   pdfUrl      String?
   pinned      Boolean  @default(false)
   publishDate DateTime @default(now())
   createdAt   DateTime @default(now())
 }
 
-model Event {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  eventDate   DateTime
-  images      String[]
-  createdAt   DateTime @default(now())
-}
-
-model GalleryAlbum {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  photos      GalleryPhoto[]
-  createdAt   DateTime @default(now())
-}
-
 model GalleryPhoto {
   id          String       @id @default(uuid())
   url         String
-  albumId     String
-  album       GalleryAlbum @relation(fields: [albumId], references: [id])
+  category    String?      // Event, Classroom
   createdAt   DateTime     @default(now())
-}
-
-model Achievement {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  image       String?
-  studentName String?
-  createdAt   DateTime @default(now())
-}
-
-model Admission {
-  id             String   @id @default(uuid())
-  studentId      String?
-  student        Student? @relation(fields: [studentId], references: [id])
-  studentName    String
-  fatherName     String
-  motherName     String
-  mobile         String
-  address        String
-  classApplying  String
-  previousSchool String?
-  dob            DateTime
-  gender         String
-  photo          String?
-  aadhaar        String?
-  status         String   @default("Pending") // Pending, Approved, Rejected
-  admissionNumber String? @unique
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
 }
 
 model Testimonial {
@@ -158,54 +202,17 @@ model Testimonial {
   role        String
   content     String
   rating      Int      @default(5)
-  status      String   @default("pending") // pending, approved, hidden
+  image       String?
+  status      String   @default("approved")
   createdAt   DateTime @default(now())
 }
 
-model Setting {
+model ContactMessage {
   id          String   @id @default(uuid())
-  key         String   @unique
-  value       String
-  updatedAt   DateTime @updatedAt
-}
-
-model Topper {
-  id                 String   @id @default(uuid())
-  photo              String?
-  name               String
-  fatherName         String
-  motherName         String
-  registrationNumber String?
-  rollNumber         String?
-  class              String
-  stream             String?
-  board              String
-  session            String
-  percentage         Float
-  totalMarks         Int
-  rank               Int
-  achievement        String?
-  goal               String?
-  certificate        String?
-  marksheet          String?
-  published          Boolean  @default(true)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-}
-
-model Result {
-  id                 String   @id @default(uuid())
-  studentId          String
-  student            Student  @relation(fields: [studentId], references: [id])
-  rollNumber         String
-  registrationNumber String
-  subjects           Json     // Store subjects and marks as JSON { Math: 90, Science: 85 }
-  total              Int
-  percentage         Float
-  division           String
-  rank               Int?
-  pass               Boolean  @default(true)
-  pdf                String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  name        String
+  email       String
+  phone       String
+  message     String
+  status      String   @default("unread") // unread, replied
+  createdAt   DateTime @default(now())
 }

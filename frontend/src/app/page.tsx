@@ -4,40 +4,13 @@ import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   ArrowRight, BookOpen, GraduationCap, Users, PhoneCall, 
-  MessageCircle, MapPin, Search, ChevronRight, PlayCircle,
-  Award, MonitorPlay, FlaskConical, Library, Bus, ShieldCheck, Trophy,
-  Briefcase, Laptop, Mic, FileText, CheckCircle2
+  MapPin, PlayCircle, Trophy, CheckCircle2, Search, FileText,
+  Clock, Calendar, Award
 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 // ----------------------------------------------------------------------
-// 1. ANNOUNCEMENT BAR
-// ----------------------------------------------------------------------
-const AnnouncementBar = () => {
-  return (
-    <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white py-2 overflow-hidden flex items-center relative z-50 shadow-md">
-      <div className="container mx-auto px-4 flex items-center justify-between text-xs md:text-sm">
-        <div className="flex gap-4 overflow-hidden whitespace-nowrap w-full">
-          <motion.div 
-            animate={{ x: [0, -1500] }} 
-            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-            className="flex gap-10 min-w-full font-medium tracking-wide"
-          >
-            <span className="flex items-center gap-2 text-yellow-300"><span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Admissions Open 2026-27 (School & Coaching)</span>
-            <span>⭐ Medhavi Scholarship Test on 15th Oct</span>
-            <span className="text-blue-200">📢 New Batch for Intermediate (Arts/Science/Commerce) Starts Soon</span>
-            <span className="flex items-center gap-2 text-yellow-300"><span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Admissions Open 2026-27 (School & Coaching)</span>
-            <span>⭐ Medhavi Scholarship Test on 15th Oct</span>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ----------------------------------------------------------------------
-// 2. PREMIUM NAVBAR
+// 1. PREMIUM NAVBAR (Allen/PW Style)
 // ----------------------------------------------------------------------
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -49,26 +22,27 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm py-4" : "bg-transparent py-6"}`}>
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-sm py-3" : "bg-transparent py-5"}`}>
+      <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-blue-500/30">S</div>
+          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg">SP</div>
           <div>
-            <h1 className={`font-extrabold text-xl tracking-tight leading-tight ${scrolled ? 'text-slate-900 dark:text-white' : 'text-white'}`}>Shiksha Prabhat</h1>
-            <p className={`text-[10px] uppercase tracking-widest font-bold ${scrolled ? 'text-blue-600 dark:text-blue-400' : 'text-blue-200'}`}>Education Hub</p>
+            <h1 className={`font-black text-xl tracking-tight leading-none ${scrolled ? 'text-slate-900 dark:text-white' : 'text-slate-900 dark:text-white drop-shadow-md'}`}>Shiksha Prabhat</h1>
+            <p className={`text-[11px] uppercase tracking-wider font-bold ${scrolled ? 'text-orange-500' : 'text-orange-500 drop-shadow-sm'}`}>Institute</p>
           </div>
         </Link>
         <div className="hidden lg:flex items-center gap-8">
-          {["School", "Coaching", "Courses", "Toppers", "Study Material", "Gallery", "Contact"].map((item) => (
-            <Link key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={`text-sm font-semibold hover:text-blue-500 transition-colors ${scrolled ? 'text-slate-600 dark:text-slate-300' : 'text-slate-100'}`}>
+          {["Home", "Courses", "Results", "Faculty", "Study Material", "Test Series", "Contact"].map((item) => (
+            <Link key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className={`text-sm font-bold hover:text-blue-600 transition-colors ${scrolled ? 'text-slate-700 dark:text-slate-300' : 'text-slate-800 dark:text-white drop-shadow-md'}`}>
               {item}
             </Link>
           ))}
         </div>
         <div className="flex items-center gap-4">
+          <button className="hidden md:block text-slate-700 dark:text-white font-bold text-sm hover:text-blue-600">Login</button>
           <Link href="/admission">
-            <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 transition-all hover:scale-105 border border-blue-400/20">
-              Apply Now
+            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5">
+              Enroll Now
             </button>
           </Link>
         </div>
@@ -82,353 +56,178 @@ const Navbar = () => {
 // ----------------------------------------------------------------------
 export default function LandingPage() {
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1120] text-slate-900 dark:text-white font-sans overflow-x-hidden selection:bg-blue-500 selection:text-white">
-      <AnnouncementBar />
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-white font-sans overflow-x-hidden selection:bg-blue-600 selection:text-white">
       <Navbar />
 
-      {/* ----------------- DUAL HERO SECTION ----------------- */}
-      <section className="relative min-h-[100vh] pt-32 pb-20 flex items-center overflow-hidden">
-        {/* Animated Aurora Background */}
-        <div className="absolute inset-0 bg-[#0B1120] z-0">
-          <motion.div style={{ y }} className="w-full h-full absolute inset-0 opacity-40">
-            <img 
-              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" 
-              alt="Campus" 
-              className="w-full h-full object-cover object-center filter blur-md scale-110 mix-blend-overlay"
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1120]/80 via-[#0B1120]/60 to-[#0B1120] z-10" />
-          
-          {/* Animated Gradient Orbs */}
-          <motion.div animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }} transition={{ duration: 20, repeat: Infinity }} className="absolute -top-[10%] left-[0%] w-[40vw] h-[40vw] rounded-full bg-blue-600/30 blur-[120px] z-10" />
-          <motion.div animate={{ scale: [1, 1.3, 1], rotate: [0, -90, 0] }} transition={{ duration: 25, repeat: Infinity }} className="absolute top-[30%] right-[0%] w-[50vw] h-[50vw] rounded-full bg-purple-600/20 blur-[150px] z-10" />
+      {/* ----------------- COACHING HERO SECTION ----------------- */}
+      <section className="relative min-h-[90vh] pt-32 pb-20 flex items-center overflow-hidden bg-slate-50 dark:bg-slate-950">
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {/* Abstract Grid & Shapes */}
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+          <motion.div animate={{ scale: [1, 1.1, 1], rotate: [0, 45, 0] }} transition={{ duration: 30, repeat: Infinity }} className="absolute -top-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/10 blur-[100px] z-10" />
+          <motion.div animate={{ scale: [1, 1.2, 1], rotate: [0, -45, 0] }} transition={{ duration: 25, repeat: Infinity }} className="absolute top-[40%] -left-[10%] w-[40vw] h-[40vw] rounded-full bg-orange-500/10 blur-[100px] z-10" />
         </div>
 
-        <div className="container mx-auto px-6 md:px-12 relative z-20">
-          <div className="text-center mb-16 max-w-4xl mx-auto pt-10">
+        <div className="container mx-auto px-6 md:px-12 relative z-20 flex flex-col lg:flex-row items-center gap-12">
+          {/* Left Content */}
+          <div className="flex-1 text-center lg:text-left pt-10">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <div className="inline-flex items-center rounded-full bg-white/5 px-6 py-2 text-sm font-semibold text-blue-200 border border-white/10 backdrop-blur-md mb-6 shadow-2xl">
-                School • Coaching • Graduation • Competitive Success
+              <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-1.5 text-sm font-bold text-blue-700 dark:text-blue-400 mb-6 border border-blue-200 dark:border-blue-800">
+                <span className="flex h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span> Admissions Open 2026
               </div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-blue-50 to-blue-200 drop-shadow-sm leading-[1.1]">
-                One Campus, One Destination <br className="hidden md:block"/> for Quality Education
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-[1.1] text-slate-900 dark:text-white">
+                Crack <span className="text-blue-600">JEE</span>, <span className="text-orange-500">NEET</span> & <br className="hidden lg:block"/> Competitive Exams
               </h1>
-              <p className="text-lg md:text-xl text-blue-100/80 mb-10 font-medium tracking-wide max-w-3xl mx-auto leading-relaxed">
-                From Nursery to Graduation Honours & Competitive Exam Preparation. Join Shiksha Prabhat Public School & Coaching Institute to build your brighter future.
+              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 font-medium max-w-2xl mx-auto lg:mx-0">
+                India's premier coaching institute for IIT-JEE, NEET, Foundation, UPSC, and CUET. Join Shiksha Prabhat and turn your dreams into AIR ranks.
               </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 text-lg group">
+                  Explore Courses <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button className="px-8 py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-800 rounded-xl font-bold shadow-sm hover:border-blue-600 transition-all text-lg flex items-center justify-center gap-2">
+                  <PlayCircle size={20} className="text-orange-500" /> Free Demo Class
+                </button>
+              </div>
+              
+              <div className="flex items-center justify-center lg:justify-start gap-6 mt-10">
+                <div className="flex -space-x-4">
+                  {[1,2,3,4].map((i) => (
+                    <div key={i} className={`w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 z-${5-i}`}>
+                       <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Student${i}`} className="w-full h-full rounded-full" alt="student"/>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-sm font-bold text-slate-600 dark:text-slate-400">
+                  <span className="text-slate-900 dark:text-white text-lg font-black">50,000+</span><br/>Students Selected
+                </div>
+              </div>
             </motion.div>
           </div>
           
-          {/* Dual Split Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* School Card */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative group rounded-3xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 p-1 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.15)] hover:shadow-[0_0_60px_rgba(37,99,235,0.25)] transition-all"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="bg-slate-900/40 rounded-[22px] p-8 md:p-10 flex-1 relative z-10 border border-white/5">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-6 border border-blue-400/20 backdrop-blur-md shadow-inner">
-                  <GraduationCap className="text-blue-300" size={32} />
-                </div>
-                <h2 className="text-3xl font-extrabold text-white mb-2">School Education</h2>
-                <p className="text-blue-200/70 mb-6 font-medium">BSEB Affiliated (Nursery to Class 10)</p>
-                
-                <ul className="space-y-4 mb-10">
-                  {["Smart Interactive Classes", "Modern Library & Playgrounds", "Safe Campus & Uniform", "Experienced School Faculty"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-slate-200">
-                      <CheckCircle2 className="text-blue-400 shrink-0" size={20} /> <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <button className="w-full py-4 bg-white text-blue-900 rounded-xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group/btn mt-auto">
-                  School Admission <ArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
-                </button>
+          {/* Right Image/Stats */}
+          <div className="flex-1 relative w-full max-w-lg lg:max-w-none">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative z-10">
+              {/* Main Image Placeholder */}
+              <div className="w-full aspect-[4/5] md:aspect-square lg:aspect-[4/5] bg-gradient-to-br from-blue-100 to-orange-50 dark:from-blue-900/20 dark:to-orange-900/20 rounded-[40px] border-8 border-white dark:border-slate-900 shadow-2xl overflow-hidden relative">
+                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" alt="Students learning" className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-overlay opacity-90"/>
               </div>
-            </motion.div>
-
-            {/* Coaching Card */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative group rounded-3xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 p-1 flex flex-col shadow-[0_0_40px_rgba(147,51,234,0.15)] hover:shadow-[0_0_60px_rgba(147,51,234,0.25)] transition-all"
-            >
-              <div className="absolute inset-0 bg-gradient-to-bl from-purple-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="bg-slate-900/40 rounded-[22px] p-8 md:p-10 flex-1 relative z-10 border border-white/5">
-                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-6 border border-purple-400/20 backdrop-blur-md shadow-inner">
-                  <BookOpen className="text-purple-300" size={32} />
+              
+              {/* Floating Stat Card 1 */}
+              <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="absolute -left-10 top-20 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 flex items-center gap-4">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/50 rounded-xl flex items-center justify-center text-orange-600"><Trophy size={24}/></div>
+                <div>
+                  <div className="font-black text-xl">AIR 1</div>
+                  <div className="text-xs text-slate-500 font-bold">JEE Advanced 2025</div>
                 </div>
-                <h2 className="text-3xl font-extrabold text-white mb-2">Coaching Institute</h2>
-                <p className="text-purple-200/70 mb-6 font-medium">Higher Studies & Competitive Exams</p>
-                
-                <ul className="space-y-4 mb-10">
-                  {["Intermediate (Arts/Science/Commerce)", "Graduation Honours (B.A/B.Sc/B.Com)", "Competitive Exams (BPSC/SSC/Banking)", "Spoken English & Computer Classes"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-slate-200">
-                      <CheckCircle2 className="text-purple-400 shrink-0" size={20} /> <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <button className="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-bold shadow-[0_0_20px_rgba(147,51,234,0.3)] hover:shadow-[0_0_30px_rgba(147,51,234,0.5)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group/btn mt-auto border border-purple-400/30">
-                  Join Coaching <ArrowRight className="group-hover/btn:translate-x-1 transition-transform" />
-                </button>
-              </div>
+              </motion.div>
+              
+              {/* Floating Stat Card 2 */}
+              <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 5 }} className="absolute -right-6 bottom-32 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 flex items-center gap-4">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center text-blue-600"><CheckCircle2 size={24}/></div>
+                <div>
+                  <div className="font-black text-xl">98%</div>
+                  <div className="text-xs text-slate-500 font-bold">Success Rate</div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ----------------- 6 PREMIUM CATEGORIES (EDUCATION PROGRAMS) ----------------- */}
-      <section className="py-24 bg-white dark:bg-slate-950 relative border-t border-slate-100 dark:border-slate-800" id="courses">
+      {/* ----------------- COURSES (PW/Allen Style) ----------------- */}
+      <section className="py-24 bg-white dark:bg-slate-900 relative" id="courses">
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-sm font-black text-blue-600 dark:text-blue-500 uppercase tracking-widest mb-3">Education Programs</h2>
-            <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white">Everything Under One Roof</h3>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4">Our Top Courses</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-medium">Expert-led batches designed to give you the ultimate competitive edge.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {[
-              { title: "School Education", icon: Users, color: "blue", desc: "Nursery to Class 10 (BSEB). Smart interactive learning foundation." },
-              { title: "Intermediate", icon: BookOpen, color: "purple", desc: "Arts, Science, and Commerce streams with expert subject faculty." },
-              { title: "Graduation Honours", icon: GraduationCap, color: "pink", desc: "B.A, B.Sc, B.Com Honours coaching with detailed university notes." },
-              { title: "Competitive Prep", icon: ShieldCheck, color: "orange", desc: "BPSC, SSC, Railway, Banking, NDA, CTET, STET, CUET preparation." },
-              { title: "Computer Education", icon: Laptop, color: "emerald", desc: "Basic Computer, MS Office, Tally, Web Development, Programming." },
-              { title: "Spoken English", icon: Mic, color: "sky", desc: "Beginner to Advanced Spoken English & Personality Development." }
-            ].map((cat, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ y: -8 }}
-                className="bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden"
-              >
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg bg-${cat.color}-500 bg-gradient-to-br from-${cat.color}-500 to-${cat.color}-600`}>
-                  <cat.icon size={28} />
+              { title: "IIT-JEE (Main + Adv)", tag: "Target 2026", color: "blue", desc: "Complete physics, chemistry & math syllabus covered by top educators with regular mock tests.", fee: "₹45,000" },
+              { title: "NEET (UG)", tag: "Droppers Batch", color: "green", desc: "Specialized batch for medical aspirants. In-depth biology, chemistry, and physics modules.", fee: "₹42,000" },
+              { title: "Foundation (Class 9-10)", tag: "Pre-Nurture", color: "orange", desc: "Build a strong base for NTSE, Olympiads, and future JEE/NEET preparation early on.", fee: "₹25,000" },
+              { title: "UPSC / BPSC", tag: "Civil Services", color: "purple", desc: "Comprehensive GS coverage, current affairs, and answer writing practice by ex-bureaucrats.", fee: "₹65,000" },
+              { title: "SSC / Banking", tag: "Govt Jobs", color: "red", desc: "Quantitative aptitude, reasoning, English, and GA taught with short-tricks and speed tests.", fee: "₹15,000" },
+              { title: "CUET (UG)", tag: "University Entry", color: "sky", desc: "Domain subjects + General test prep to secure admission in top central universities.", fee: "₹12,000" }
+            ].map((course, i) => (
+              <div key={i} className="bg-slate-50 dark:bg-slate-800 rounded-3xl p-1 border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all group">
+                <div className="bg-white dark:bg-slate-900 rounded-[28px] p-6 h-full flex flex-col relative overflow-hidden">
+                  <div className={`absolute top-0 right-0 bg-${course.color}-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl rounded-tr-[28px]`}>{course.tag}</div>
+                  
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-2 mt-4">{course.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm flex-1">{course.desc}</p>
+                  
+                  <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <div>
+                      <div className="text-xs text-slate-500 font-bold uppercase">Starting Fee</div>
+                      <div className="text-lg font-black text-slate-900 dark:text-white">{course.fee}</div>
+                    </div>
+                    <button className={`bg-${course.color}-100 dark:bg-${course.color}-900/30 text-${course.color}-600 dark:text-${course.color}-400 font-bold px-4 py-2 rounded-lg hover:bg-${course.color}-600 hover:text-white transition-colors`}>
+                      View Details
+                    </button>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">{cat.title}</h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">{cat.desc}</p>
-                <Link href="#" className={`inline-flex items-center font-bold text-${cat.color}-600 dark:text-${cat.color}-400 group-hover:gap-3 gap-2 transition-all`}>
-                  Explore Courses <ArrowRight size={18} />
-                </Link>
-                <div className={`absolute -right-10 -bottom-10 w-40 h-40 bg-${cat.color}-500/5 dark:bg-${cat.color}-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700`}></div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ----------------- WHY STUDY WITH US (Split Features) ----------------- */}
-      <section className="py-24 bg-slate-50 dark:bg-[#0B1120] relative">
-        <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white">Why Study With Us?</h3>
-          </div>
-          
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* School Features */}
-            <div className="flex-1 bg-white dark:bg-slate-900 p-10 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 dark:bg-blue-900/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-              <h4 className="text-3xl font-bold mb-8 relative z-10 flex items-center gap-3"><span className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600"><GraduationCap size={24}/></span> School Features</h4>
-              <ul className="space-y-6 relative z-10">
-                {[
-                  { title: "BSEB Curriculum", desc: "Strictly following Bihar board guidelines" },
-                  { title: "Experienced Teachers", desc: "Highly qualified educators" },
-                  { title: "Smart Classes", desc: "Interactive digital learning tools" },
-                  { title: "Library & Labs", desc: "Modern science lab and rich library" }
-                ].map((f, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <div className="mt-1 bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg text-blue-600"><CheckCircle2 size={20}/></div>
-                    <div>
-                      <h5 className="font-bold text-slate-900 dark:text-white text-lg">{f.title}</h5>
-                      <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{f.desc}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Coaching Features */}
-            <div className="flex-1 bg-gradient-to-br from-indigo-900 to-purple-900 p-10 rounded-[2rem] border border-indigo-500/30 shadow-xl relative overflow-hidden group text-white">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-              <h4 className="text-3xl font-bold mb-8 relative z-10 flex items-center gap-3"><span className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10"><BookOpen size={24}/></span> Coaching Features</h4>
-              <ul className="space-y-6 relative z-10">
-                {[
-                  { title: "Daily Practice Tests", desc: "Regular evaluation to track progress" },
-                  { title: "Notes & PDF Materials", desc: "Premium study material by experts" },
-                  { title: "Doubt Classes", desc: "Special 1-on-1 doubt clearing sessions" },
-                  { title: "Small Batch Size", desc: "Personalized attention to every student" }
-                ].map((f, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <div className="mt-1 bg-purple-500/30 border border-purple-400/30 p-2 rounded-lg text-purple-200"><CheckCircle2 size={20}/></div>
-                    <div>
-                      <h5 className="font-bold text-white text-lg">{f.title}</h5>
-                      <p className="text-indigo-200 text-sm mt-1">{f.desc}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ----------------- STUDY MATERIAL & TEST SERIES BANNER ----------------- */}
-      <section className="py-20 bg-blue-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* Study Material */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-3xl text-white">
-              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6 border border-white/30"><FileText size={28}/></div>
-              <h3 className="text-2xl font-bold mb-3">Download Study Material</h3>
-              <p className="text-blue-100 mb-6">Get access to premium PDF notes, assignments, previous year question papers, and recorded video classes.</p>
-              <button className="bg-white text-blue-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all w-full flex justify-center items-center gap-2">
-                Access Library <ArrowRight size={18}/>
-              </button>
-            </div>
-            
-            {/* Test Series */}
-            <div className="bg-slate-900/60 backdrop-blur-md border border-white/10 p-8 rounded-3xl text-white">
-              <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-6 border border-white/20"><MonitorPlay size={28}/></div>
-              <h3 className="text-2xl font-bold mb-3">Online Test Series</h3>
-              <p className="text-slate-300 mb-6">Participate in class tests, weekly mock exams, and competitive quizzes. Check your real-time leaderboard ranking.</p>
-              <button className="bg-gradient-to-r from-blue-500 to-indigo-600 font-bold px-6 py-3 rounded-xl shadow-lg hover:-translate-y-1 transition-all w-full flex justify-center items-center gap-2 border border-blue-400/30">
-                Start Mock Test <ArrowRight size={18}/>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ----------------- MEDHAVI TOPPERS & SUCCESS WALL ----------------- */}
-      <section className="py-24 bg-gradient-to-b from-amber-50 to-[#F8FAFC] dark:from-slate-900 dark:to-[#0B1120] relative overflow-hidden" id="toppers">
-        {/* Decorative Gold Elements */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-400/10 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-600/10 blur-[100px] rounded-full pointer-events-none"></div>
-        
+      {/* ----------------- TOP FACULTY ----------------- */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden" id="faculty">
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 mb-6 shadow-lg shadow-amber-500/30">
-              <Trophy className="text-white" size={32} />
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">Medhavi Success Wall</h2>
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">Celebrating the exceptional achievements of our School & Coaching Institute stars.</p>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4">Learn From The Best</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg font-medium">Our faculty consists of Ex-IITians, doctors, and subject matter experts.</p>
           </div>
           
-          {/* Dual Toppers Categories */}
-          <div className="flex flex-col md:flex-row gap-12 max-w-7xl mx-auto">
-            {/* School Toppers */}
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold mb-8 text-center flex items-center justify-center gap-3 border-b-2 border-slate-200 dark:border-slate-800 pb-4"><GraduationCap className="text-blue-500"/> School Board Toppers</h3>
-              <div className="space-y-6">
-                {[
-                  { name: "Priya Sharma", class: "Class 10th BSEB", marks: "96.4%", badge: "District Rank 2" },
-                  { name: "Rahul Kumar", class: "Class 10th BSEB", marks: "94.2%", badge: "School Topper" }
-                ].map((topper, i) => (
-                  <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 flex items-center gap-6 group hover:-translate-y-1 transition-transform">
-                    <div className="w-20 h-20 rounded-full border-4 border-yellow-400 overflow-hidden shrink-0">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${topper.name}`} className="w-full h-full bg-slate-100" alt="Student" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-slate-900 dark:text-white">{topper.name}</h4>
-                      <p className="text-sm text-slate-500 mb-2">{topper.class}</p>
-                      <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-400 rounded-lg text-xs font-bold">{topper.badge}</span>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-500 to-amber-600">{topper.marks}</div>
-                    </div>
-                  </div>
-                ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {[
+              { name: "Alok Kumar", subject: "Physics", exp: "15+ Yrs Exp", expBadge: "Ex-Allen" },
+              { name: "Dr. Sneha Roy", subject: "Biology", exp: "12+ Yrs Exp", expBadge: "MBBS, AIIMS" },
+              { name: "Ravi Shankar", subject: "Mathematics", exp: "10+ Yrs Exp", expBadge: "IIT Delhi" },
+              { name: "Pooja Mishra", subject: "Chemistry", exp: "14+ Yrs Exp", expBadge: "Ex-Aakash" }
+            ].map((fac, i) => (
+              <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-6 text-center shadow-sm border border-slate-200 dark:border-slate-800 hover:-translate-y-2 transition-transform group">
+                <div className="w-32 h-32 mx-auto rounded-full border-4 border-blue-100 dark:border-blue-900 mb-6 overflow-hidden bg-slate-100">
+                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${fac.name}`} alt={fac.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{fac.name}</h3>
+                <p className="text-blue-600 dark:text-blue-400 font-bold text-sm mb-4">{fac.subject}</p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold px-3 py-1 rounded-full">{fac.exp}</span>
+                  <span className="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-bold px-3 py-1 rounded-full">{fac.expBadge}</span>
+                </div>
               </div>
-            </div>
-
-            {/* Coaching Toppers */}
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold mb-8 text-center flex items-center justify-center gap-3 border-b-2 border-slate-200 dark:border-slate-800 pb-4"><Briefcase className="text-purple-500"/> Coaching Success Stories</h3>
-              <div className="space-y-6">
-                {[
-                  { name: "Amit Singh", class: "BPSC Pre Qualified", marks: "Selected", badge: "Govt Job" },
-                  { name: "Neha Verma", class: "Class 12th Science", marks: "91.8%", badge: "State Rank 15" }
-                ].map((topper, i) => (
-                  <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 flex items-center gap-6 group hover:-translate-y-1 transition-transform">
-                    <div className="w-20 h-20 rounded-full border-4 border-purple-400 overflow-hidden shrink-0">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${topper.name}`} className="w-full h-full bg-slate-100" alt="Student" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-slate-900 dark:text-white">{topper.name}</h4>
-                      <p className="text-sm text-slate-500 mb-2">{topper.class}</p>
-                      <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 rounded-lg text-xs font-bold">{topper.badge}</span>
-                    </div>
-                    <div className="text-right">
-                      <div className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br ${topper.marks === 'Selected' ? 'from-emerald-500 to-green-600' : 'from-purple-500 to-indigo-600'}`}>{topper.marks}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ----------------- ADMISSION BANNER ----------------- */}
-      <section className="py-24 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-           <div className="absolute inset-0 bg-blue-900/90 mix-blend-multiply z-10" />
-           <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070" className="w-full h-full object-cover filter blur-sm" alt="Campus"/>
-        </div>
-        <div className="container mx-auto px-6 relative z-20 text-center max-w-4xl text-white">
-          <div className="mb-6 inline-flex rounded-full bg-red-600 px-6 py-2 text-sm font-bold uppercase tracking-widest animate-pulse border border-red-400">
-            Admissions Open 2026–27
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Secure Your Child's Future Today</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl">
-              <h3 className="text-2xl font-bold text-blue-200 mb-2">School Admission</h3>
-              <p>Nursery to Class 10 (BSEB). Complete holistic development with smart classes.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl">
-              <h3 className="text-2xl font-bold text-purple-200 mb-2">Coaching Admission</h3>
-              <p>Intermediate • Graduation Honours • Competitive Exams • Spoken English.</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <button className="px-8 py-4 bg-white text-blue-900 rounded-full font-bold shadow-2xl hover:-translate-y-1 transition text-lg flex justify-center items-center gap-2">
-               Apply For School
-             </button>
-             <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full font-bold shadow-2xl border border-purple-400/30 hover:-translate-y-1 transition text-lg flex justify-center items-center gap-2">
-               Join Coaching
-             </button>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ----------------- DEVELOPER FOOTER ----------------- */}
-      <footer className="bg-[#0B1120] text-slate-300 py-16 border-t border-slate-800">
+      <footer className="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
         <div className="container mx-auto px-6 md:px-12">
           <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-slate-500">© 2026 Shiksha Prabhat Public School & Coaching. All rights reserved.</p>
+            <p className="text-sm font-bold text-slate-500">© 2026 Shiksha Prabhat Institute. All rights reserved.</p>
             
             {/* Professional Developer Credit Card */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4 hover:bg-slate-800/80 transition-colors max-w-sm w-full md:w-auto shadow-lg shadow-black/50">
+            <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 flex items-center gap-4 hover:bg-slate-800/80 transition-colors shadow-lg shadow-black/50">
               <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-800 shrink-0 border border-slate-700">
                 <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mrityunjay" alt="Developer" className="w-full h-full" />
               </div>
               <div className="flex-1">
-                <p className="text-[10px] uppercase tracking-widest text-blue-500 font-bold mb-1">Design & Developed By</p>
-                <h4 className="text-white font-bold text-sm">Mrityunjay Kumar</h4>
+                <p className="text-[10px] uppercase tracking-widest text-blue-400 font-black mb-1">Design & Developed By</p>
+                <h4 className="text-white font-black text-sm">Mrityunjay Kumar</h4>
                 <div className="flex gap-3 mt-1 text-slate-400">
-                  <Link href="https://www.linkedin.com/in/mrityunjay-kumar-8480842a5" className="hover:text-blue-400 transition text-xs">LinkedIn</Link>
+                  <Link href="https://www.linkedin.com/in/mrityunjay-kumar-8480842a5" className="hover:text-blue-400 transition text-xs font-bold">LinkedIn</Link>
                   <span>•</span>
-                  <Link href="https://github.com/mrityunjay45108" className="hover:text-blue-400 transition text-xs">GitHub</Link>
-                  <span>•</span>
-                  <Link href="mailto:kumarmrityunjay5210@gmail.com" className="hover:text-blue-400 transition text-xs">Email</Link>
+                  <Link href="https://github.com/mrityunjay45108" className="hover:text-blue-400 transition text-xs font-bold">GitHub</Link>
                 </div>
               </div>
             </div>
