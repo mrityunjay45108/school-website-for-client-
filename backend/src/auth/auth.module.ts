@@ -11,7 +11,7 @@ import { JwtAuthGuard } from './jwt-auth.guard.js';
 @Module({
   imports: [
     PrismaModule,
-    PassportModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'SUPER_SECRET_KEY_SPPS_ADMIN_123',
       signOptions: { expiresIn: '7d' },
