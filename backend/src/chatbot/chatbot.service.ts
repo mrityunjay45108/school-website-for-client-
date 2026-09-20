@@ -52,9 +52,12 @@ export class ChatbotService {
 
     // 7. Teachers / Faculty
     if (q.includes('teacher') || q.includes('faculty') || q.includes('sir')) {
-      const teachers = await this.prisma.teacher.findMany({ select: { name: true, subject: true }, take: 5 });
+      const teachers = await this.prisma.teacher.findMany({ 
+        select: { user: { select: { name: true } }, subjects: true }, 
+        take: 5 
+      });
       if (teachers.length > 0) {
-        return `We have experienced and dedicated faculty. Some of our teachers are: ${teachers.map(t => `${t.name} (${t.subject})`).join(', ')}.`;
+        return `We have experienced and dedicated faculty. Some of our teachers are: ${teachers.map(t => `${t.user.name} (${t.subjects.join(', ')})`).join(', ')}.`;
       }
       return "We have a team of highly experienced and dedicated teachers for all subjects.";
     }
