@@ -157,6 +157,62 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ----------------- ABOUT / DIRECTOR'S MESSAGE ----------------- */}
+      <section className="py-24 bg-[#111111]" id="about">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl">
+          <div className="flex flex-col md:flex-row gap-16 items-center">
+            
+            {/* Image Placeholder */}
+            <div className="w-full md:w-5/12 relative">
+              <div className="aspect-[3/4] w-full border-2 border-[#333] p-2 bg-[#181818] relative z-10">
+                <img 
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop" 
+                  alt="Director" 
+                  className="w-full h-full object-cover filter grayscale-[20%]"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#eab308] z-0 hidden md:block"></div>
+            </div>
+
+            {/* Text Content */}
+            <div className="w-full md:w-7/12">
+              <h2 className="text-sm font-bold tracking-widest text-[#eab308] uppercase mb-4">Director's Message</h2>
+              <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
+                Shaping the minds of tomorrow, today.
+              </h3>
+              <div className="w-16 h-1 bg-[#eab308] mb-8"></div>
+              
+              <div className="space-y-6 text-gray-400 text-lg leading-relaxed mb-10">
+                <p>
+                  Welcome to Shiksha Prabhat Public School & Coaching Classes. Our mission is to provide an educational environment where students not only excel in academics but also grow into responsible and confident individuals. 
+                </p>
+                <p>
+                  With our dedicated faculty and small batch sizes, we ensure that every child receives the individual attention they deserve. Together, we can build a strong foundation for your child's bright future.
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-[#333] pt-8">
+                <div>
+                  <h4 className="text-2xl font-serif font-bold text-white mb-1">Sambhodh Kumar</h4>
+                  <p className="text-[#eab308] text-sm uppercase tracking-widest">Director</p>
+                </div>
+                <div className="mt-4 sm:mt-0">
+                  <Link 
+                    href="https://www.facebook.com/share/1EsLyDY7sd/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 border border-[#333] hover:border-[#eab308] px-6 py-2.5 text-sm text-gray-300 hover:text-[#eab308] transition-colors rounded-sm group"
+                  >
+                    Facebook Profile <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
       {/* ----------------- MEDHAVI TOPPERS HALL OF FAME ----------------- */}
       <section className="py-24 bg-[#111111] border-y border-[#2a2a2a]" id="toppers">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl text-center">
