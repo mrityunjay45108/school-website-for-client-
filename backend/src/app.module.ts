@@ -7,9 +7,11 @@ import { AuthModule } from './auth/auth.module.js';
 import { NoticeModule } from './notice/notice.module.js';
 import { StudentModule } from './student/student.module.js';
 import { DashboardModule } from './dashboard/dashboard.module.js';
+import { TeacherModule } from './teacher/teacher.module.js';
+import { CourseModule } from './course/course.module.js';
 
 @Module({
-  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule, DashboardModule],
+  imports: [TopperModule, PrismaModule, AuthModule, NoticeModule, StudentModule, DashboardModule, TeacherModule, CourseModule],
   controllers: [AppController],
   providers: [AppService],
 })
