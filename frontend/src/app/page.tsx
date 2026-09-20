@@ -390,17 +390,42 @@ export default function LandingPage() {
 
             <div className="bg-[#181818] p-8 border border-[#333]">
               <h3 className="text-2xl font-serif font-bold text-white mb-6">Send us a message</h3>
-              <form className="space-y-4">
+              <form 
+                className="space-y-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const target = e.target as typeof e.target & {
+                    name: { value: string };
+                    phone: { value: string };
+                    message: { value: string };
+                    reset: () => void;
+                  };
+                  fetch("http://localhost:3001/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      name: target.name.value,
+                      phone: target.phone.value,
+                      message: target.message.value
+                    })
+                  }).then(res => {
+                    if(res.ok) {
+                      alert("Message sent successfully!");
+                      target.reset();
+                    }
+                  });
+                }}
+              >
                 <div>
-                  <input type="text" placeholder="Your Name" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                  <input type="text" name="name" required placeholder="Your Name" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
                 </div>
                 <div>
-                  <input type="tel" placeholder="Your Phone Number" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                  <input type="tel" name="phone" required placeholder="Your Phone Number" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
                 </div>
                 <div>
-                  <textarea rows={4} placeholder="How can we help?" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm"></textarea>
+                  <textarea name="message" required rows={4} placeholder="How can we help?" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm"></textarea>
                 </div>
-                <button type="button" className="w-full bg-[#eab308] text-[#111] font-bold py-4 rounded-sm hover:bg-[#ca9a04] transition-colors">
+                <button type="submit" className="w-full bg-[#eab308] text-[#111] font-bold py-4 rounded-sm hover:bg-[#ca9a04] transition-colors">
                   Submit Request
                 </button>
               </form>
