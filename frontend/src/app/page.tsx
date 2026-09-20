@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   Scale, BookOpen, GraduationCap, Users, PhoneCall, 
-  MapPin, Clock, ArrowRight, CheckCircle, Mail
+  MapPin, Clock, ArrowRight, CheckCircle, Mail, Bell
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,7 +34,7 @@ const Navbar = () => {
           </div>
         </Link>
         <div className="hidden lg:flex items-center gap-8">
-          {["Home", "Programs", "Toppers", "Gallery", "Contact"].map((item) => (
+          {["Home", "Programs", "Notices", "Toppers", "Gallery", "Contact"].map((item) => (
             <Link key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-white hover:text-[#eab308] transition-colors relative group">
               {item}
               <span className={`absolute -bottom-2 left-0 w-full h-[2px] bg-[#eab308] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left ${item === 'Home' ? 'scale-x-100' : ''}`}></span>
@@ -61,13 +61,22 @@ const Navbar = () => {
 // ----------------------------------------------------------------------
 export default function LandingPage() {
   const [toppersList, setToppersList] = useState<any[]>([]);
+  const [notices, setNotices] = useState<any[]>([]);
 
   useEffect(() => {
-    // Need to use native fetch or axios for public API, api from @/lib/axios might redirect on 401 if it's protected, but Toppers GET is public.
+    // Fetch Toppers
     fetch("http://localhost:3001/topper")
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setToppersList(data.slice(0, 3)); // Show top 3
+      })
+      .catch(err => console.log(err));
+
+    // Fetch Notices
+    fetch("http://localhost:3001/notices")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setNotices(data.slice(0, 3)); // Show top 3 notices
       })
       .catch(err => console.log(err));
   }, []);
@@ -224,6 +233,45 @@ export default function LandingPage() {
               </div>
             </div>
             
+          </div>
+        </div>
+      </section>
+
+      {/* ----------------- NOTICE BOARD ----------------- */}
+      <section className="py-24 bg-[#181818]" id="notices">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div>
+              <h2 className="text-4xl font-serif font-bold text-[#eab308] mb-4">Notice Board</h2>
+              <div className="w-16 h-1 bg-[#eab308]"></div>
+            </div>
+            <Link href="/admin/notices" className="text-gray-400 hover:text-[#eab308] transition-colors flex items-center gap-2 mt-4 md:mt-0">
+              View all notices <ArrowRight size={16} />
+            </Link>
+          </div>
+          
+          <div className="space-y-4">
+            {notices.length > 0 ? notices.map((notice, i) => (
+              <div key={i} className="bg-[#111111] border border-[#333] p-6 hover:border-[#eab308]/50 transition-colors flex gap-6 items-start">
+                <div className="bg-[#181818] border border-[#333] p-4 flex flex-col items-center justify-center min-w-[80px]">
+                  <span className="text-2xl font-bold text-[#eab308] leading-none">{new Date(notice.createdAt || Date.now()).getDate()}</span>
+                  <span className="text-xs text-gray-500 uppercase font-bold mt-1">
+                    {new Date(notice.createdAt || Date.now()).toLocaleString('default', { month: 'short' })}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-white mb-2">{notice.title}</h3>
+                  <p className="text-gray-400 leading-relaxed mb-3">{notice.content}</p>
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#eab308]">
+                    <Bell size={14} /> {notice.audience}
+                  </div>
+                </div>
+              </div>
+            )) : (
+              <div className="bg-[#111111] border border-[#333] p-8 text-center text-gray-500">
+                No recent notices available.
+              </div>
+            )}
           </div>
         </div>
       </section>
