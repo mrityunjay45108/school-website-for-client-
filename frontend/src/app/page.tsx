@@ -181,7 +181,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ----------------- ABOUT / DIRECTOR'S MESSAGE ----------------- */}
+      {/* ----------------- ABOUT THE SCHOOL & AIM ----------------- */}
       <section className="py-24 bg-[#111111]" id="about">
         <div className="container mx-auto px-6 md:px-12 max-w-6xl">
           <div className="flex flex-col md:flex-row gap-16 items-center">
@@ -200,18 +200,18 @@ export default function LandingPage() {
 
             {/* Text Content */}
             <div className="w-full md:w-7/12">
-              <h2 className="text-sm font-bold tracking-widest text-[#eab308] uppercase mb-4">Director's Message</h2>
+              <h2 className="text-sm font-bold tracking-widest text-[#eab308] uppercase mb-4">About Our Institution</h2>
               <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
-                Shaping the minds of tomorrow, today.
+                Shiksha Prabhat Public School & Coaching Classes
               </h3>
               <div className="w-16 h-1 bg-[#eab308] mb-8"></div>
               
               <div className="space-y-6 text-gray-400 text-lg leading-relaxed mb-10">
                 <p>
-                  Welcome to Shiksha Prabhat Public School & Coaching Classes. Our mission is to provide an educational environment where students not only excel in academics but also grow into responsible and confident individuals. 
+                  <strong className="text-white">Our Aim:</strong> Our primary mission is to provide an empowering educational environment where students not only excel in academics but also grow into responsible, ethical, and confident individuals. We aim to bridge the gap between traditional schooling and modern competitive excellence.
                 </p>
                 <p>
-                  With our dedicated faculty and small batch sizes, we ensure that every child receives the individual attention they deserve. Together, we can build a strong foundation for your child's bright future.
+                  With our dedicated faculty, small batch sizes, and a strict focus on holistic development from Nursery to Class 10th (BSEB), we ensure that every child receives the individual attention they deserve. Together, we can build a strong foundation for your child's bright future.
                 </p>
               </div>
               
@@ -350,13 +350,60 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ----------------- CTA SECTION (Matching Screenshot) ----------------- */}
-      <section className="py-24 bg-[#111111] border-t border-[#2a2a2a] text-center">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-serif font-bold text-white mb-10">Secure your child's future today.</h2>
-          <button className="bg-[#eab308] hover:bg-[#ca9a04] text-[#181818] px-8 py-4 text-lg font-bold transition-colors flex items-center justify-center gap-2 mx-auto rounded-sm group">
-            Contact us now <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-          </button>
+      {/* ----------------- CONTACT US SECTION ----------------- */}
+      <section className="py-24 bg-[#111111] border-t border-[#2a2a2a]" id="contact">
+        <div className="container mx-auto px-6 md:px-12 max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-serif font-bold text-[#eab308] mb-6">Get in touch</h2>
+              <div className="w-16 h-1 bg-[#eab308] mb-8"></div>
+              <p className="text-gray-400 text-lg mb-10">
+                Secure your child's future today. Contact us for admission inquiries, coaching details, or any other questions you may have.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 p-4 border border-[#333] bg-[#181818]">
+                  <div className="bg-[#eab308]/10 p-3 rounded-full shrink-0">
+                    <PhoneCall className="text-[#eab308]" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-bold uppercase tracking-widest mb-1">Director's Contact</p>
+                    <p className="text-white text-xl font-bold">Sambhodh Kumar</p>
+                    <p className="text-[#eab308] text-lg mt-1">+91 62017 04992</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 border border-[#333] bg-[#181818]">
+                  <div className="bg-[#eab308]/10 p-3 rounded-full shrink-0">
+                    <MapPin className="text-[#eab308]" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-bold uppercase tracking-widest mb-1">School Address</p>
+                    <p className="text-white font-medium">Shiksha Prabhat Public School</p>
+                    <p className="text-gray-400 mt-1">Bahurar, Bihar, India</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#181818] p-8 border border-[#333]">
+              <h3 className="text-2xl font-serif font-bold text-white mb-6">Send us a message</h3>
+              <form className="space-y-4">
+                <div>
+                  <input type="text" placeholder="Your Name" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                </div>
+                <div>
+                  <input type="tel" placeholder="Your Phone Number" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                </div>
+                <div>
+                  <textarea rows={4} placeholder="How can we help?" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm"></textarea>
+                </div>
+                <button type="button" className="w-full bg-[#eab308] text-[#111] font-bold py-4 rounded-sm hover:bg-[#ca9a04] transition-colors">
+                  Submit Request
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -373,7 +420,7 @@ export default function LandingPage() {
                 <h2 className="font-serif font-bold text-xl text-[#eab308]">Shiksha Prabhat</h2>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Providing exceptional education and coaching representation with integrity and dedication since 2015.
+                Shiksha Prabhat Public School & Coaching Classes. Providing exceptional education and coaching representation with integrity and dedication since 2015.
               </p>
             </div>
             
@@ -383,6 +430,7 @@ export default function LandingPage() {
                 <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
                 <li><Link href="#programs" className="hover:text-white transition-colors">Programs</Link></li>
                 <li><Link href="#about" className="hover:text-white transition-colors">About us</Link></li>
+                <li><Link href="#notices" className="hover:text-white transition-colors">Notices</Link></li>
                 <li><Link href="#contact" className="hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
@@ -396,7 +444,7 @@ export default function LandingPage() {
                 </li>
                 <li className="flex gap-3 items-center">
                   <PhoneCall className="text-[#eab308] shrink-0" size={18} />
-                  <span>+91 62017 04992</span>
+                  <span>+91 62017 04992 (Director)</span>
                 </li>
                 <li className="flex gap-3 items-center">
                   <Mail className="text-[#eab308] shrink-0" size={18} />
@@ -431,6 +479,5 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-    </div>
   );
 }
