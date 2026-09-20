@@ -500,8 +500,8 @@ export default function LandingPage() {
             {/* Developer Credit */}
             <div className="flex items-center gap-4">
               <span className="text-gray-400">Design & Developed by <strong className="text-gray-300">Mrityunjay Kumar</strong></span>
-              <Link href="https://www.linkedin.com/in/mrityunjay-kumar-8480842a5" className="hover:text-[#eab308] transition-colors">LinkedIn</Link>
-              <Link href="https://github.com/mrityunjay45108" className="hover:text-[#eab308] transition-colors">GitHub</Link>
+              <Link href="https://www.linkedin.com/in/mrityunjay-kumar-8480842a5" target="_blank" className="hover:text-[#eab308] transition-colors">LinkedIn</Link>
+              <Link href="https://my-portfolio-gold-two-31.vercel.app/" target="_blank" className="hover:text-[#eab308] transition-colors">Portfolio</Link>
             </div>
           </div>
         </div>
