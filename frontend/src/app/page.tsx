@@ -168,7 +168,7 @@ export default function LandingPage() {
                 <img 
                   src="/director.png" 
                   alt="Director Sambhodh Kumar" 
-                  className="w-full h-full object-cover filter grayscale-[10%]"
+                  className="w-full h-full object-cover object-top filter grayscale-[10%]"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#eab308] z-0 hidden md:block"></div>
