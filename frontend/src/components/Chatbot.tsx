@@ -27,18 +27,21 @@ export function Chatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = async (queryText?: string) => {
+    const textToSend = queryText || input;
+    if (!textToSend.trim()) return;
 
     // Add user message
-    const userMsg: Message = { id: Date.now().toString(), text: input, sender: "user" };
+    const userMsg: Message = { id: Date.now().toString(), text: textToSend, sender: "user" };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
     try {
       // Simulate typing delay for realism
       await new Promise(r => setTimeout(r, 400));
-      const res = await fetch("http://localhost:3001/chatbot/ask", {
+      // Use standard fetch but with dynamic URL env var
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${apiUrl}/chatbot/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userMsg.text }),
@@ -97,6 +100,19 @@ export function Chatbot() {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Quick Questions */}
+            <div className="px-4 pb-2 bg-[#1a1a1a] flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap">
+              {["What is the admission fee?", "Show me the toppers", "Who are the teachers?", "Are there coaching classes?"].map((q) => (
+                <button
+                  key={q}
+                  onClick={() => { setInput(q); setTimeout(() => handleSend(q), 50); }}
+                  className="text-xs bg-[#333] hover:bg-[#eab308] text-gray-300 hover:text-[#111] px-3 py-1.5 rounded-full transition-colors shrink-0"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+
             {/* Input Area */}
             <div className="p-4 bg-[#111] border-t border-[#333]">
               <div className="relative flex items-center">
@@ -104,12 +120,12 @@ export function Chatbot() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
                   placeholder="Type your question..."
                   className="w-full bg-[#1a1a1a] border border-[#333] text-white rounded-sm pl-4 pr-12 py-3 text-sm outline-none focus:border-[#eab308] transition-colors"
                 />
                 <button suppressHydrationWarning 
-                  onClick={handleSend}
+                  onClick={() => handleSend(input)}
                   className="absolute right-2 p-2 text-[#eab308] hover:text-[#ca9a04] transition-colors"
                 >
                   <Send size={18} />

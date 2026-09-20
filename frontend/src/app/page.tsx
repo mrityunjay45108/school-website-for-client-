@@ -97,7 +97,8 @@ export default function LandingPage() {
 
   useEffect(() => {
     // Fetch Toppers
-    fetch("http://localhost:3001/topper")
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    fetch(`${apiUrl}/topper`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setToppersList(data.slice(0, 3)); // Show top 3
@@ -105,7 +106,7 @@ export default function LandingPage() {
       .catch(err => console.log(err));
 
     // Fetch Notices
-    fetch("http://localhost:3001/notices")
+    fetch(`${apiUrl}/notices`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setNotices(data.slice(0, 3)); // Show top 3 notices
@@ -432,7 +433,8 @@ export default function LandingPage() {
                     message: { value: string };
                     reset: () => void;
                   };
-                  fetch("http://localhost:3001/contact", {
+                  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+                  fetch(`${apiUrl}/contact`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
