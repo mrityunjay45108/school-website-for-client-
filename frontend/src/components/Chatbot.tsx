@@ -100,7 +100,7 @@ export function Chatbot() {
             {/* Input Area */}
             <div className="p-4 bg-[#111] border-t border-[#333]">
               <div className="relative flex items-center">
-                <input
+                <input suppressHydrationWarning
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -108,7 +108,7 @@ export function Chatbot() {
                   placeholder="Type your question..."
                   className="w-full bg-[#1a1a1a] border border-[#333] text-white rounded-sm pl-4 pr-12 py-3 text-sm outline-none focus:border-[#eab308] transition-colors"
                 />
-                <button 
+                <button suppressHydrationWarning 
                   onClick={handleSend}
                   className="absolute right-2 p-2 text-[#eab308] hover:text-[#ca9a04] transition-colors"
                 >

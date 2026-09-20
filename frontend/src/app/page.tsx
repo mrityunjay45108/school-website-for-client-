@@ -46,7 +46,7 @@ const Navbar = () => {
             Admin Login
           </Link>
           <Link href="/admission">
-            <button className="bg-[#eab308] hover:bg-[#ca9a04] text-[#181818] px-6 py-2.5 text-sm font-bold transition-colors rounded-sm">
+            <button suppressHydrationWarning className="bg-[#eab308] hover:bg-[#ca9a04] text-[#181818] px-6 py-2.5 text-sm font-bold transition-colors rounded-sm">
               School Admission
             </button>
           </Link>
@@ -107,10 +107,10 @@ export default function LandingPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="px-8 py-4 bg-[#eab308] text-[#181818] font-bold hover:bg-[#ca9a04] transition-colors flex items-center justify-center gap-2 rounded-sm group">
+              <button suppressHydrationWarning className="px-8 py-4 bg-[#eab308] text-[#181818] font-bold hover:bg-[#ca9a04] transition-colors flex items-center justify-center gap-2 rounded-sm group">
                 School Admission <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
               </button>
-              <button className="px-8 py-4 bg-transparent border border-white/20 text-[#eab308] hover:bg-white/5 transition-colors font-bold flex items-center justify-center rounded-sm">
+              <button suppressHydrationWarning className="px-8 py-4 bg-transparent border border-white/20 text-[#eab308] hover:bg-white/5 transition-colors font-bold flex items-center justify-center rounded-sm">
                 Join Coaching Classes
               </button>
             </div>
@@ -417,15 +417,15 @@ export default function LandingPage() {
                 }}
               >
                 <div>
-                  <input type="text" name="name" required placeholder="Your Name" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                  <input suppressHydrationWarning type="text" name="name" required placeholder="Your Name" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
                 </div>
                 <div>
-                  <input type="tel" name="phone" required placeholder="Your Phone Number" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
+                  <input suppressHydrationWarning type="tel" name="phone" required placeholder="Your Phone Number" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm" />
                 </div>
                 <div>
                   <textarea name="message" required rows={4} placeholder="How can we help?" className="w-full bg-[#111] border border-[#333] p-4 text-white outline-none focus:border-[#eab308] rounded-sm"></textarea>
                 </div>
-                <button type="submit" className="w-full bg-[#eab308] text-[#111] font-bold py-4 rounded-sm hover:bg-[#ca9a04] transition-colors">
+                <button suppressHydrationWarning type="submit" className="w-full bg-[#eab308] text-[#111] font-bold py-4 rounded-sm hover:bg-[#ca9a04] transition-colors">
                   Submit Request
                 </button>
               </form>
