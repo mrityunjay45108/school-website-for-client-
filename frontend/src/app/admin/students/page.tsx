@@ -47,6 +47,27 @@ export default function StudentsPage() {
     }
   };
 
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    fatherName: "",
+    mobile: "",
+    registrationNumber: ""
+  });
+
+  const handleAddSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await api.post("/students", formData);
+      toast.success("Student added successfully");
+      setShowAddModal(false);
+      setFormData({ name: "", fatherName: "", mobile: "", registrationNumber: "" });
+      fetchStudents();
+    } catch (error) {
+      toast.error("Failed to add student");
+    }
+  };
+
   return (
     <div className="space-y-6 pb-10">
       <div className="flex justify-between items-center">
@@ -54,7 +75,10 @@ export default function StudentsPage() {
           <h1 className="text-3xl font-serif font-bold text-[#eab308]">Students Directory</h1>
           <p className="text-gray-400 mt-1">Manage enrolled students</p>
         </div>
-        <button className="flex items-center gap-2 bg-[#eab308] hover:bg-[#ca9a04] text-[#111] px-5 py-2.5 rounded-sm font-bold transition-colors shadow-lg">
+        <button 
+          onClick={() => setShowAddModal(true)}
+          className="flex items-center gap-2 bg-[#eab308] hover:bg-[#ca9a04] text-[#111] px-5 py-2.5 rounded-sm font-bold transition-colors shadow-lg"
+        >
           <Plus size={18} /> Add Student
         </button>
       </div>
@@ -104,6 +128,36 @@ export default function StudentsPage() {
           </tbody>
         </table>
       </div>
+
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="bg-[#181818] border border-[#333] rounded-sm p-6 w-full max-w-md">
+            <h2 className="text-2xl font-serif font-bold text-[#eab308] mb-6">Add New Student</h2>
+            <form onSubmit={handleAddSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Student Name</label>
+                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-[#111] border border-[#333] text-white rounded-sm px-3 py-2 outline-none focus:border-[#eab308]" />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Father's Name</label>
+                <input required type="text" value={formData.fatherName} onChange={e => setFormData({...formData, fatherName: e.target.value})} className="w-full bg-[#111] border border-[#333] text-white rounded-sm px-3 py-2 outline-none focus:border-[#eab308]" />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Mobile Number</label>
+                <input required type="text" value={formData.mobile} onChange={e => setFormData({...formData, mobile: e.target.value})} className="w-full bg-[#111] border border-[#333] text-white rounded-sm px-3 py-2 outline-none focus:border-[#eab308]" />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-400 mb-1">Registration Number (Optional)</label>
+                <input type="text" value={formData.registrationNumber} onChange={e => setFormData({...formData, registrationNumber: e.target.value})} className="w-full bg-[#111] border border-[#333] text-white rounded-sm px-3 py-2 outline-none focus:border-[#eab308]" />
+              </div>
+              <div className="flex justify-end gap-3 pt-4">
+                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
+                <button type="submit" className="bg-[#eab308] hover:bg-[#ca9a04] text-[#111] px-6 py-2 rounded-sm font-bold transition-colors">Save Student</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
