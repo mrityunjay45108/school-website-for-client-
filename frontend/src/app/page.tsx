@@ -172,12 +172,9 @@ export default function LandingPage() {
               { name: "Priya Sharma", class: "Class 10th BSEB", marks: "94.2%", label: "District Rank 2" },
               { name: "Amit Singh", class: "Class 8th Annual", marks: "98.5%", label: "Class Topper" },
             ].map((topper, i) => (
-              <div key={i} className="bg-[#1a1a1a] p-8 border border-[#333] hover:border-[#eab308]/50 transition-colors flex flex-col items-center">
-                <div className="w-24 h-24 rounded-full border-2 border-[#eab308] p-1 mb-6">
-                   <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${topper.name}`} className="w-full h-full rounded-full bg-[#222]" alt={topper.name} />
-                </div>
+              <div key={i} className="bg-[#1a1a1a] p-8 border border-[#333] hover:border-[#eab308]/50 transition-colors flex flex-col items-center pt-10">
                 <h3 className="text-2xl font-serif font-bold text-white mb-1">{topper.name}</h3>
-                <p className="text-gray-400 mb-4">{topper.class}</p>
+                <p className="text-gray-400 mb-6">{topper.class}</p>
                 <div className="text-3xl font-bold text-[#eab308] mb-2">{topper.marks}</div>
                 <div className="text-sm tracking-widest uppercase text-gray-500">{topper.label}</div>
               </div>
@@ -286,7 +283,7 @@ export default function LandingPage() {
                 </li>
                 <li className="flex gap-3 items-center">
                   <Mail className="text-[#eab308] shrink-0" size={18} />
-                  <span>kumarmrityunjay5210@gmail.com</span>
+                  <span>info@shikshaprabhat.com</span>
                 </li>
               </ul>
             </div>
