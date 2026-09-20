@@ -1,0 +1,211 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  student   Student?
+  teacher   Teacher?
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model Student {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id])
+  fatherName         String?
+  motherName         String?
+  mobile             String?
+  address            String?
+  class              String?
+  previousSchool     String?
+  dob                DateTime?
+  gender             String?
+  photo              String?
+  aadhaar            String?
+  registrationNumber String?  @unique
+  rollNumber         String?
+  
+  results            Result[]
+  admissions         Admission[]
+}
+
+model Teacher {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+  photo         String?
+  qualification String?
+  experience    String?
+  subjects      String[]
+  classes       String[]
+  achievements  String?
+  socialLinks   Json?
+
+  courses       Course[]
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  category    String
+  board       String?
+  description String?
+  subjects    String[]
+  fees        Float?
+  duration    String?
+  image       String?
+  status      String   @default("published")
+  seats       Int?
+  
+  teacherId   String?
+  teacher     Teacher? @relation(fields: [teacherId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notice {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  type        String   // Admission, Holiday, Exam, etc.
+  pdfUrl      String?
+  pinned      Boolean  @default(false)
+  publishDate DateTime @default(now())
+  createdAt   DateTime @default(now())
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  eventDate   DateTime
+  images      String[]
+  createdAt   DateTime @default(now())
+}
+
+model GalleryAlbum {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  photos      GalleryPhoto[]
+  createdAt   DateTime @default(now())
+}
+
+model GalleryPhoto {
+  id          String       @id @default(uuid())
+  url         String
+  albumId     String
+  album       GalleryAlbum @relation(fields: [albumId], references: [id])
+  createdAt   DateTime     @default(now())
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  image       String?
+  studentName String?
+  createdAt   DateTime @default(now())
+}
+
+model Admission {
+  id             String   @id @default(uuid())
+  studentId      String?
+  student        Student? @relation(fields: [studentId], references: [id])
+  studentName    String
+  fatherName     String
+  motherName     String
+  mobile         String
+  address        String
+  classApplying  String
+  previousSchool String?
+  dob            DateTime
+  gender         String
+  photo          String?
+  aadhaar        String?
+  status         String   @default("Pending") // Pending, Approved, Rejected
+  admissionNumber String? @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(uuid())
+  name        String
+  role        String
+  content     String
+  rating      Int      @default(5)
+  status      String   @default("pending") // pending, approved, hidden
+  createdAt   DateTime @default(now())
+}
+
+model Setting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  updatedAt   DateTime @updatedAt
+}
+
+model Topper {
+  id                 String   @id @default(uuid())
+  photo              String?
+  name               String
+  fatherName         String
+  motherName         String
+  registrationNumber String?
+  rollNumber         String?
+  class              String
+  stream             String?
+  board              String
+  session            String
+  percentage         Float
+  totalMarks         Int
+  rank               Int
+  achievement        String?
+  goal               String?
+  certificate        String?
+  marksheet          String?
+  published          Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Result {
+  id                 String   @id @default(uuid())
+  studentId          String
+  student            Student  @relation(fields: [studentId], references: [id])
+  rollNumber         String
+  registrationNumber String
+  subjects           Json     // Store subjects and marks as JSON { Math: 90, Science: 85 }
+  total              Int
+  percentage         Float
+  division           String
+  rank               Int?
+  pass               Boolean  @default(true)
+  pdf                String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
