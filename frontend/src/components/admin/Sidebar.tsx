@@ -16,13 +16,13 @@ import {
   Bell,
   Image as ImageIcon,
   MessageSquare,
-  Download,
   Settings,
-  UsersRound,
   LogOut,
   ChevronLeft,
   ChevronRight,
-  ClipboardList
+  ClipboardList,
+  PenTool,
+  Clock
 } from "lucide-react";
 
 const menuItems = [
@@ -30,17 +30,15 @@ const menuItems = [
   { title: "Admissions", icon: ClipboardList, path: "/admin/admissions" },
   { title: "Students", icon: GraduationCap, path: "/admin/students" },
   { title: "Teachers", icon: UserCheck, path: "/admin/teachers" },
-  { title: "Courses", icon: BookOpen, path: "/admin/courses" },
-  { title: "Medhavi Toppers", icon: Trophy, path: "/admin/toppers" },
+  { title: "School Classes", icon: BookOpen, path: "/admin/school-classes" },
+  { title: "Coaching Classes", icon: Users, path: "/admin/coaching-classes" },
+  { title: "Weekly Tests", icon: Clock, path: "/admin/weekly-tests" },
+  { title: "Homework", icon: PenTool, path: "/admin/homework" },
   { title: "Results", icon: FileBarChart, path: "/admin/results" },
-  { title: "Attendance", icon: Users, path: "/admin/attendance" },
-  { title: "Events", icon: CalendarDays, path: "/admin/events" },
-  { title: "Notices", icon: Bell, path: "/admin/notices" },
+  { title: "Medhavi Toppers", icon: Trophy, path: "/admin/toppers" },
   { title: "Gallery", icon: ImageIcon, path: "/admin/gallery" },
-  { title: "Testimonials", icon: MessageSquare, path: "/admin/testimonials" },
-  { title: "Downloads", icon: Download, path: "/admin/downloads" },
+  { title: "Notices", icon: Bell, path: "/admin/notices" },
   { title: "Website CMS", icon: Settings, path: "/admin/cms" },
-  { title: "User Management", icon: UsersRound, path: "/admin/users" },
   { title: "Settings", icon: Settings, path: "/admin/settings" },
 ];
 
@@ -51,32 +49,32 @@ export function Sidebar() {
   return (
     <motion.aside
       animate={{ width: isCollapsed ? 80 : 280 }}
-      className="h-screen bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col relative z-20 shadow-xl shadow-blue-900/5 transition-all duration-300"
+      className="h-screen bg-[#111111] border-r border-[#333] flex flex-col relative z-20 shadow-xl transition-all duration-300"
     >
-      <div className="flex items-center justify-between p-6 h-20 border-b border-slate-100 dark:border-slate-800">
+      <div className="flex items-center justify-between p-6 h-20 border-b border-[#333]">
         {!isCollapsed && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="font-extrabold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 truncate"
+            className="font-serif font-bold text-xl text-[#eab308] truncate"
           >
             SPPS Admin
           </motion.div>
         )}
         {isCollapsed && (
-          <div className="w-full flex justify-center text-blue-600 font-bold text-xl">
+          <div className="w-full flex justify-center text-[#eab308] font-bold text-xl font-serif">
             S
           </div>
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-4 top-6 bg-blue-600 text-white p-1 rounded-full shadow-lg hover:scale-110 transition"
+          className="absolute -right-4 top-6 bg-[#eab308] text-[#111] p-1 rounded-full shadow-lg hover:scale-110 transition"
         >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar scrollbar-hide">
         {menuItems.map((item) => {
           const isActive = pathname === item.path;
           return (
@@ -84,21 +82,21 @@ export function Sidebar() {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative ${
+                className={`flex items-center gap-3 px-3 py-3 rounded-sm transition-all duration-200 group relative ${
                   isActive
-                    ? "bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-700 dark:text-blue-400 font-medium"
-                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900"
+                    ? "bg-[#eab308]/10 text-[#eab308] font-medium"
+                    : "text-gray-400 hover:bg-white/5 hover:text-white"
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute left-0 top-1/4 h-1/2 w-1 bg-blue-600 rounded-r-full"
+                    className="absolute left-0 top-1/4 h-1/2 w-1 bg-[#eab308]"
                   />
                 )}
                 <item.icon
                   size={20}
-                  className={isActive ? "text-blue-600 dark:text-blue-400" : "group-hover:text-blue-500"}
+                  className={isActive ? "text-[#eab308]" : "group-hover:text-gray-300"}
                 />
                 {!isCollapsed && <span className="truncate">{item.title}</span>}
               </motion.div>
@@ -107,8 +105,8 @@ export function Sidebar() {
         })}
       </div>
 
-      <div className="p-4 border-t border-slate-100 dark:border-slate-800">
-        <button className="flex w-full items-center gap-3 px-3 py-3 rounded-xl text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+      <div className="p-4 border-t border-[#333]">
+        <button className="flex w-full items-center gap-3 px-3 py-3 rounded-sm text-red-500 hover:bg-red-500/10 transition-colors">
           <LogOut size={20} />
           {!isCollapsed && <span>Logout</span>}
         </button>

@@ -12,10 +12,10 @@ import {
 } from "recharts";
 
 const stats = [
-  { title: "Total Students", value: "1,452", icon: Users, color: "from-blue-500 to-cyan-500", trend: "+12%" },
-  { title: "Total Teachers", value: "84", icon: GraduationCap, color: "from-purple-500 to-pink-500", trend: "+2%" },
-  { title: "Pending Admissions", value: "24", icon: UserPlus, color: "from-orange-500 to-amber-500", trend: "-5%" },
-  { title: "Revenue (Monthly)", value: "₹4.5L", icon: IndianRupee, color: "from-emerald-500 to-teal-500", trend: "+8%" },
+  { title: "Total Students", value: "1,452", icon: Users, color: "text-[#eab308]", bg: "bg-[#eab308]/10", trend: "+12%" },
+  { title: "Total Teachers", value: "84", icon: GraduationCap, color: "text-blue-500", bg: "bg-blue-500/10", trend: "+2%" },
+  { title: "Pending Admissions", value: "24", icon: UserPlus, color: "text-orange-500", bg: "bg-orange-500/10", trend: "-5%" },
+  { title: "Revenue (Monthly)", value: "₹4.5L", icon: IndianRupee, color: "text-emerald-500", bg: "bg-emerald-500/10", trend: "+8%" },
 ];
 
 const admissionData = [
@@ -25,37 +25,36 @@ const admissionData = [
 ];
 
 const genderData = [
-  { name: "Boys", value: 800, color: "#3b82f6" },
-  { name: "Girls", value: 652, color: "#ec4899" },
+  { name: "Boys", value: 800, color: "#eab308" },
+  { name: "Girls", value: 652, color: "#3b82f6" },
 ];
 
 export default function AdminDashboard() {
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-8 pb-10 text-white font-sans">
       {/* Welcome Banner */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 p-8 text-white shadow-xl"
+        className="relative overflow-hidden rounded-md bg-[#111111] border border-[#333] p-8 shadow-xl"
       >
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
         <div className="relative z-10">
-          <h1 className="text-3xl font-bold mb-2">Welcome Admin 👋</h1>
-          <p className="text-blue-200 mb-6 max-w-xl text-sm">
-            Here's what's happening at Shiksha Prabhat Public School today. You have 24 pending admissions to review.
+          <h1 className="text-3xl font-serif font-bold text-[#eab308] mb-2">Welcome Director 👋</h1>
+          <p className="text-gray-400 mb-6 max-w-xl text-sm">
+            Here's what's happening at Shiksha Prabhat Public School & Coaching today. You have 24 pending admissions to review.
           </p>
           
           <div className="flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium transition">
+            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
               <UserPlus size={16} /> Add Student
             </button>
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium transition">
-              <BookOpen size={16} /> New Course
+            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
+              <BookOpen size={16} /> New Class
             </button>
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium transition">
+            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
               <Trophy size={16} /> Add Topper
             </button>
-            <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium transition">
+            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
               <Bell size={16} /> Publish Notice
             </button>
           </div>
@@ -70,24 +69,23 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-lg transition-all relative overflow-hidden group"
+            className="bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333] hover:border-[#eab308]/50 transition-colors relative"
           >
-            <div className={`absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br ${stat.color} rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500`}></div>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">{stat.title}</p>
-                <h3 className="text-3xl font-bold mt-1 text-slate-800 dark:text-white">{stat.value}</h3>
+                <p className="text-gray-400 text-sm font-medium">{stat.title}</p>
+                <h3 className="text-3xl font-bold mt-1 text-white">{stat.value}</h3>
               </div>
-              <div className={`p-3 rounded-2xl bg-gradient-to-br ${stat.color} text-white shadow-md`}>
+              <div className={`p-3 rounded-md ${stat.bg} ${stat.color}`}>
                 <stat.icon size={20} />
               </div>
             </div>
             <div className="flex items-center gap-2 mt-4 text-sm">
-              <span className={`flex items-center ${stat.trend.startsWith("+") ? "text-emerald-500" : "text-rose-500"} font-semibold bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded-lg`}>
+              <span className={`flex items-center ${stat.trend.startsWith("+") ? "text-emerald-500" : "text-rose-500"} font-semibold bg-[#1a1a1a] border border-[#333] px-2 py-1 rounded-md`}>
                 {stat.trend.startsWith("+") ? <TrendingUp size={14} className="mr-1" /> : <TrendingDown size={14} className="mr-1" />}
                 {stat.trend}
               </span>
-              <span className="text-slate-400 text-xs">vs last month</span>
+              <span className="text-gray-500 text-xs">vs last month</span>
             </div>
           </motion.div>
         ))}
@@ -99,11 +97,11 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800"
+          className="lg:col-span-2 bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333]"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold">Admissions Overview</h3>
-            <select className="bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-sm py-2 outline-none">
+            <h3 className="text-lg font-serif font-bold text-[#eab308]">Admissions Overview</h3>
+            <select className="bg-[#1a1a1a] border border-[#333] text-gray-300 rounded-sm text-sm py-2 px-3 outline-none focus:border-[#eab308]">
               <option>This Year</option>
               <option>Last Year</option>
             </select>
@@ -111,19 +109,19 @@ export default function AdminDashboard() {
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={admissionData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b'}} dx={-10} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af'}} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9ca3af'}} dx={-10} />
                 <RechartsTooltip 
-                  contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+                  contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="admissions" 
-                  stroke="#4f46e5" 
+                  stroke="#eab308" 
                   strokeWidth={4}
-                  dot={{ r: 4, strokeWidth: 2 }}
-                  activeDot={{ r: 8, strokeWidth: 0, fill: '#4f46e5' }}
+                  dot={{ r: 4, strokeWidth: 2, fill: '#111', stroke: '#eab308' }}
+                  activeDot={{ r: 8, strokeWidth: 0, fill: '#eab308' }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -134,9 +132,9 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
-          className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col"
+          className="bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333] flex flex-col"
         >
-          <h3 className="text-lg font-bold mb-6">Students Demographics</h3>
+          <h3 className="text-lg font-serif font-bold text-[#eab308] mb-6">Students Demographics</h3>
           <div className="flex-1 flex flex-col justify-center items-center relative">
             <div className="h-[220px] w-full relative">
               <ResponsiveContainer width="100%" height="100%">
@@ -155,12 +153,12 @@ export default function AdminDashboard() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <RechartsTooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }} />
+                  <RechartsTooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-bold">1,452</span>
-                <span className="text-xs text-slate-400">Total</span>
+                <span className="text-2xl font-bold text-white">1,452</span>
+                <span className="text-xs text-gray-400">Total</span>
               </div>
             </div>
             
@@ -168,7 +166,7 @@ export default function AdminDashboard() {
               {genderData.map((item) => (
                 <div key={item.name} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                  <span className="text-sm font-medium">{item.name}</span>
+                  <span className="text-sm font-medium text-gray-300">{item.name}</span>
                 </div>
               ))}
             </div>
