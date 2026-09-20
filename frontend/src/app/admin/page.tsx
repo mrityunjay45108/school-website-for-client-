@@ -1,91 +1,121 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  Users, UserPlus, BookOpen, Bell, Trophy, FileText, 
-  TrendingUp, TrendingDown, IndianRupee, GraduationCap
-} from "lucide-react";
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
-  BarChart, Bar, PieChart, Pie, Cell
-} from "recharts";
+import { api } from "@/lib/axios";
+import { Users, GraduationCap, FileBarChart, HandCoins, UserPlus, FileText, Trophy, Bell } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
-const stats = [
-  { title: "Total Students", value: "1,452", icon: Users, color: "text-[#eab308]", bg: "bg-[#eab308]/10", trend: "+12%" },
-  { title: "Total Teachers", value: "84", icon: GraduationCap, color: "text-blue-500", bg: "bg-blue-500/10", trend: "+2%" },
-  { title: "Pending Admissions", value: "24", icon: UserPlus, color: "text-orange-500", bg: "bg-orange-500/10", trend: "-5%" },
-  { title: "Revenue (Monthly)", value: "₹4.5L", icon: IndianRupee, color: "text-emerald-500", bg: "bg-emerald-500/10", trend: "+8%" },
+// Static charts for now
+const admissionsData = [
+  { name: 'Jan', admissions: 45 },
+  { name: 'Feb', admissions: 80 },
+  { name: 'Mar', admissions: 120 },
+  { name: 'Apr', admissions: 180 },
+  { name: 'May', admissions: 90 },
+  { name: 'Jun', admissions: 60 },
 ];
 
-const admissionData = [
-  { name: "Jan", admissions: 40 }, { name: "Feb", admissions: 30 },
-  { name: "Mar", admissions: 120 }, { name: "Apr", admissions: 180 },
-  { name: "May", admissions: 90 }, { name: "Jun", admissions: 40 },
+const demographicsData = [
+  { name: 'Nursery to Class 5', value: 400 },
+  { name: 'Class 6 to 10', value: 652 },
+  { name: 'Coaching (State Board)', value: 400 },
 ];
-
-const genderData = [
-  { name: "Boys", value: 800, color: "#eab308" },
-  { name: "Girls", value: 652, color: "#3b82f6" },
-];
+const COLORS = ['#eab308', '#3b82f6', '#ef4444'];
 
 export default function AdminDashboard() {
+  const [stats, setStats] = useState({
+    totalStudents: 0,
+    totalTeachers: 0,
+    pendingAdmissions: 0,
+    revenue: 0,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await api.get("/admin/dashboard-stats");
+        setStats(data);
+      } catch (error) {
+        toast.error("Failed to load dashboard metrics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
   return (
-    <div className="space-y-8 pb-10 text-white font-sans">
-      {/* Welcome Banner */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-md bg-[#111111] border border-[#333] p-8 shadow-xl"
-      >
+    <div className="space-y-6 pb-10">
+      
+      {/* Welcome Section */}
+      <div className="bg-[#181818] border border-[#333] p-8 rounded-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#eab308]/5 blur-[80px] rounded-full pointer-events-none"></div>
         <div className="relative z-10">
-          <h1 className="text-3xl font-serif font-bold text-[#eab308] mb-2">Welcome Director 👋</h1>
-          <p className="text-gray-400 mb-6 max-w-xl text-sm">
-            Here's what's happening at Shiksha Prabhat Public School & Coaching today. You have 24 pending admissions to review.
+          <h1 className="text-3xl font-serif font-bold text-[#eab308] flex items-center gap-3">
+            Welcome Director <span className="animate-wave origin-bottom-right inline-block">👋</span>
+          </h1>
+          <p className="text-gray-400 mt-2 max-w-2xl text-sm leading-relaxed">
+            Here's what's happening at Shiksha Prabhat Public School & Coaching today. You have {stats.pendingAdmissions} pending admissions to review.
           </p>
           
-          <div className="flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
-              <UserPlus size={16} /> Add Student
-            </button>
-            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
-              <BookOpen size={16} /> New Class
-            </button>
-            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
-              <Trophy size={16} /> Add Topper
-            </button>
-            <button className="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] hover:border-[#eab308] text-[#eab308] px-4 py-2 rounded-sm text-sm font-medium transition-colors">
-              <Bell size={16} /> Publish Notice
-            </button>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link href="/admin/students">
+              <button className="flex items-center gap-2 bg-[#111] border border-[#333] hover:border-[#eab308] text-white px-4 py-2 text-sm rounded-sm transition-colors">
+                <UserPlus size={16} className="text-[#eab308]" /> Add Student
+              </button>
+            </Link>
+            <Link href="/admin/school-classes">
+              <button className="flex items-center gap-2 bg-[#111] border border-[#333] hover:border-[#eab308] text-white px-4 py-2 text-sm rounded-sm transition-colors">
+                <FileText size={16} className="text-[#eab308]" /> New Class
+              </button>
+            </Link>
+            <Link href="/admin/toppers">
+              <button className="flex items-center gap-2 bg-[#111] border border-[#333] hover:border-[#eab308] text-white px-4 py-2 text-sm rounded-sm transition-colors">
+                <Trophy size={16} className="text-[#eab308]" /> Add Topper
+              </button>
+            </Link>
+            <Link href="/admin/notices">
+              <button className="flex items-center gap-2 bg-[#111] border border-[#333] hover:border-[#eab308] text-white px-4 py-2 text-sm rounded-sm transition-colors">
+                <Bell size={16} className="text-[#eab308]" /> Publish Notice
+              </button>
+            </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Stats Grid */}
+      {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.title}
+        {[
+          { title: "Total Students", value: isLoading ? "..." : stats.totalStudents.toLocaleString(), icon: Users, color: "text-[#eab308]", bg: "bg-[#eab308]/10", trend: "+12%", trendUp: true },
+          { title: "Total Teachers", value: isLoading ? "..." : stats.totalTeachers.toLocaleString(), icon: GraduationCap, color: "text-blue-500", bg: "bg-blue-500/10", trend: "+2%", trendUp: true },
+          { title: "Pending Admissions", value: isLoading ? "..." : stats.pendingAdmissions.toLocaleString(), icon: UserPlus, color: "text-orange-500", bg: "bg-orange-500/10", trend: "-5%", trendUp: false },
+          { title: "Revenue (Monthly)", value: isLoading ? "..." : `₹${(stats.revenue/100000).toFixed(1)}L`, icon: HandCoins, color: "text-green-500", bg: "bg-green-500/10", trend: "+8%", trendUp: true },
+        ].map((metric, i) => (
+          <motion.div 
+            key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333] hover:border-[#eab308]/50 transition-colors relative"
+            transition={{ delay: i * 0.1 }}
+            className="bg-[#181818] border border-[#333] p-6 rounded-sm hover:border-[#444] transition-colors"
           >
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex justify-between items-start">
               <div>
-                <p className="text-gray-400 text-sm font-medium">{stat.title}</p>
-                <h3 className="text-3xl font-bold mt-1 text-white">{stat.value}</h3>
+                <p className="text-gray-400 text-sm font-medium">{metric.title}</p>
+                <h3 className="text-3xl font-bold text-white mt-2">{metric.value}</h3>
               </div>
-              <div className={`p-3 rounded-md ${stat.bg} ${stat.color}`}>
-                <stat.icon size={20} />
+              <div className={`w-10 h-10 rounded-sm flex items-center justify-center ${metric.bg} ${metric.color}`}>
+                <metric.icon size={20} />
               </div>
             </div>
-            <div className="flex items-center gap-2 mt-4 text-sm">
-              <span className={`flex items-center ${stat.trend.startsWith("+") ? "text-emerald-500" : "text-rose-500"} font-semibold bg-[#1a1a1a] border border-[#333] px-2 py-1 rounded-md`}>
-                {stat.trend.startsWith("+") ? <TrendingUp size={14} className="mr-1" /> : <TrendingDown size={14} className="mr-1" />}
-                {stat.trend}
+            <div className="mt-4 flex items-center gap-2">
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-sm ${metric.trendUp ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"}`}>
+                {metric.trendUp ? "↗" : "↘"} {metric.trend}
               </span>
-              <span className="text-gray-500 text-xs">vs last month</span>
+              <span className="text-xs text-gray-500">vs last month</span>
             </div>
           </motion.div>
         ))}
@@ -93,87 +123,61 @@ export default function AdminDashboard() {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333]"
-        >
+        <div className="lg:col-span-2 bg-[#181818] border border-[#333] p-6 rounded-sm">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-serif font-bold text-[#eab308]">Admissions Overview</h3>
-            <select className="bg-[#1a1a1a] border border-[#333] text-gray-300 rounded-sm text-sm py-2 px-3 outline-none focus:border-[#eab308]">
+            <select className="bg-[#111] border border-[#333] text-sm text-gray-300 px-3 py-1.5 rounded-sm outline-none">
               <option>This Year</option>
               <option>Last Year</option>
             </select>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={admissionData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af'}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#9ca3af'}} dx={-10} />
-                <RechartsTooltip 
-                  contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+              <LineChart data={admissionsData}>
+                <XAxis dataKey="name" stroke="#555" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#555" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#111', borderColor: '#333', borderRadius: '4px' }}
+                  itemStyle={{ color: '#eab308' }}
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="admissions" 
-                  stroke="#eab308" 
-                  strokeWidth={4}
-                  dot={{ r: 4, strokeWidth: 2, fill: '#111', stroke: '#eab308' }}
-                  activeDot={{ r: 8, strokeWidth: 0, fill: '#eab308' }}
-                />
+                <Line type="monotone" dataKey="admissions" stroke="#eab308" strokeWidth={3} dot={{ fill: '#eab308', r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="bg-[#111111] rounded-sm p-6 shadow-sm border border-[#333] flex flex-col"
-        >
-          <h3 className="text-lg font-serif font-bold text-[#eab308] mb-6">Students Demographics</h3>
-          <div className="flex-1 flex flex-col justify-center items-center relative">
-            <div className="h-[220px] w-full relative">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={genderData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                    stroke="none"
-                  >
-                    {genderData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <RechartsTooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', color: '#fff', borderRadius: '4px' }} />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-bold text-white">1,452</span>
-                <span className="text-xs text-gray-400">Total</span>
-              </div>
-            </div>
-            
-            <div className="flex justify-center gap-6 mt-4 w-full">
-              {genderData.map((item) => (
-                <div key={item.name} className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                  <span className="text-sm font-medium text-gray-300">{item.name}</span>
-                </div>
-              ))}
+        <div className="bg-[#181818] border border-[#333] p-6 rounded-sm flex flex-col">
+          <h3 className="text-lg font-serif font-bold text-[#eab308] mb-2">Students Demographics</h3>
+          <div className="flex-1 min-h-[250px] relative">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={demographicsData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={90}
+                  paddingAngle={5}
+                  dataKey="value"
+                  stroke="none"
+                >
+                  {demographicsData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#111', borderColor: '#333', borderRadius: '4px' }}
+                  itemStyle={{ color: '#fff' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-2xl font-bold text-white">1,452</span>
+              <span className="text-xs text-gray-400">Total</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-
     </div>
   );
 }
