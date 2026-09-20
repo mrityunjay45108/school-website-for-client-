@@ -46,4 +46,37 @@ export class AuthService {
       }
     };
   }
+
+  async changePassword(userId: string, newPass: string) {
+    const hashedPassword = await bcrypt.hash(newPass, 10);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword }
+    });
+    return { success: true };
+  }
+
+  async createAdmin(email: string, name: string, pass: string) {
+    const existing = await this.prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      throw new UnauthorizedException('Email already in use');
+    }
+    const hashedPassword = await bcrypt.hash(pass, 10);
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+        role: 'SUPER_ADMIN'
+      }
+    });
+    return { id: user.id, email: user.email, name: user.name };
+  }
+
+  async getAdmins() {
+    return this.prisma.user.findMany({
+      where: { role: 'SUPER_ADMIN' },
+      select: { id: true, email: true, name: true, createdAt: true }
+    });
+  }
 }
