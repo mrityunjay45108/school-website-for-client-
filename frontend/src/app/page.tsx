@@ -94,6 +94,8 @@ const Navbar = () => {
 export default function LandingPage() {
   const [toppersList, setToppersList] = useState<any[]>([]);
   const [notices, setNotices] = useState<any[]>([]);
+  const [isLoadingNotices, setIsLoadingNotices] = useState(true);
+  const [isLoadingToppers, setIsLoadingToppers] = useState(true);
 
   useEffect(() => {
     // Fetch Toppers
@@ -103,7 +105,8 @@ export default function LandingPage() {
       .then(data => {
         if (Array.isArray(data)) setToppersList(data.slice(0, 3)); // Show top 3
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => setIsLoadingToppers(false));
 
     // Fetch Notices
     fetch(`${apiUrl}/notices`)
@@ -111,7 +114,8 @@ export default function LandingPage() {
       .then(data => {
         if (Array.isArray(data)) setNotices(data.slice(0, 3)); // Show top 3 notices
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => setIsLoadingNotices(false));
   }, []);
 
   return (
@@ -284,7 +288,11 @@ export default function LandingPage() {
           </div>
           
           <div className="space-y-4">
-            {notices.length > 0 ? notices.map((notice, i) => (
+            {isLoadingNotices ? (
+              <div className="bg-[#111111] border border-[#333] p-8 text-center text-gray-500 animate-pulse">
+                Waking up server and loading notices... Please wait.
+              </div>
+            ) : notices.length > 0 ? notices.map((notice, i) => (
               <div key={i} className="bg-[#111111] border border-[#333] p-6 hover:border-[#eab308]/50 transition-colors flex gap-6 items-start">
                 <div className="bg-[#181818] border border-[#333] p-4 flex flex-col items-center justify-center min-w-[80px]">
                   <span className="text-2xl font-bold text-[#eab308] leading-none">
@@ -298,7 +306,7 @@ export default function LandingPage() {
                   <h3 className="text-xl font-serif font-bold text-white mb-2">{notice.title}</h3>
                   <p className="text-gray-400 leading-relaxed mb-3">{notice.content}</p>
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#eab308]">
-                    <Bell size={14} /> {notice.audience}
+                    <Bell size={14} /> {notice.audience || notice.type}
                   </div>
                 </div>
               </div>
@@ -321,7 +329,11 @@ export default function LandingPage() {
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {toppersList.length > 0 ? toppersList.map((topper, i) => (
+            {isLoadingToppers ? (
+              <div className="col-span-3 py-10 text-gray-500 animate-pulse text-center">
+                Waking up server and loading top performers...
+              </div>
+            ) : toppersList.length > 0 ? toppersList.map((topper, i) => (
               <div key={i} className="bg-[#1a1a1a] p-8 border border-[#333] hover:border-[#eab308]/50 transition-colors flex flex-col items-center pt-10">
                 <h3 className="text-2xl font-serif font-bold text-white mb-1">{topper.name}</h3>
                 <p className="text-gray-400 mb-6">{topper.class}</p>
